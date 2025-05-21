@@ -69,4 +69,5 @@
   }
   ?>
 </main>
+<script src="https://js.stripe.com/v3/"></script>
 <?php require_once './includes/footer.php'; ?>

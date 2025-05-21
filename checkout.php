@@ -1,87 +1,77 @@
-<?php include_once('./includes/headerNav.php'); ?>
-<div class="overlay" data-overlay></div>
-<!--
-    - HEADER
-  -->
-<header>
-    <!-- top head action, search etc in php -->
-    <!-- inc/topheadactions.php -->
-    <?php require_once './includes/topheadactions.php'; ?>
-    <!-- mobile nav in php -->
-    <!-- inc/mobilenav.php -->
-    <?php require_once './includes/mobilenav.php'; ?>
-    <link rel="stylesheet" href="css/checkout-styles.css">
-</header>
+<?php
+session_start();
 
-<body>
+require 'vendor/autoload.php';
 
-    <div class="appointments-section">
+$env = parse_ini_file('.env');
+$stripeApiKey = $env["STRIPE_SECRET_KEY"];
 
-        <div class="appointment-heading">
-            <p class="appointment-head">CheckOut</p>
-            <span class="appointment-line"></span>
+\Stripe\Stripe::setApiKey($stripeApiKey);
 
-        </div>
+$DOMAIN = 'http://localhost/E-Commerce';
 
-        <div class="inner-appointment">
+$line_items = [];
+if (isset($_SESSION['mycart']) && !empty($_SESSION['mycart'])) {
+    foreach ($_SESSION['mycart'] as $item) {
+        $price = filter_var($item['price'], FILTER_VALIDATE_FLOAT);
+        $quantity = filter_var($item['product_qty'], FILTER_VALIDATE_INT);
 
-            <section class="edit-detail-field">
-                <div class="Add-child-section">
-                    <div class="child-detail-inner">
+        if ($price === false || $quantity === false || $price <= 0 || $quantity <= 0) {
+            // Handle invalid item data, perhaps log it and skip, or show an error
+            // For now, we'll skip or you can redirect to an error page
+            // error_log("Invalid item data in cart: " . print_r($item, true));
+            // header('Location: ' . $DOMAIN . '/cart.php?error=invalid_item_data');
+            // exit;
+            continue; // Or handle more gracefully
+        }
 
-                        <div class="child-fields1">
-                            <input type="text" style="color: #676767;" placeholder="First Name">
-                        </div>
-                        <div class="child-fields3">
-                            <input type="text" style="color: #676767;" placeholder="Last Name">
-                        </div>
+        $line_items[] = [
+            'price_data' => [
+                'currency' => 'myr',
+                'product_data' => [
+                    'name' => $item['name'],
+                    // 'images' => [$DOMAIN . '/admin/upload/' . $item['product_img']], // Optional
+                ],
+                'unit_amount' => (int)($price * 100), // Price in cents, ensure it's an integer
+            ],
+            'quantity' => $quantity,
+        ];
+    }
+}
 
-                    </div>
-                    <div class="child-detail-inner">
+// Check if cart was empty or all items were invalid
+if (empty($line_items)) {
+    // Redirect back to cart with an error message or display an error page
+    // For simplicity, redirecting to cart page (you might want a more specific error page)
+    $_SESSION['checkout_error'] = 'Your cart is empty or contains invalid items.'; // Optional: set a flash message
+    header('Location: ' . $DOMAIN . '/cart.php'); // Or your cart page
+    exit;
+}
 
-                        <div class="child-fields child-fields4">
-                            <input type="text" placeholder="P-134">
-                        </div>
-                        <div class="child-fields child-fields5 ">
-                            <input type="text" placeholder="A5">
-                        </div>
 
-                    </div>
-                    <div class="child-detail-inner">
+try {
+    $checkout_session = \Stripe\Checkout\Session::create([
+        'payment_method_types' => ['card'],
+        'line_items' => $line_items,
+        'mode' => 'payment',
+        'success_url' => $DOMAIN . '/success.php?session_id={CHECKOUT_SESSION_ID}',
+        'cancel_url' => $DOMAIN . '/cart.php',
+    ]);
 
-                        <div class="child-fields child-fields6">
-                            <input type="text" placeholder="Manchester">
-                        </div>
-                        <div class="child-fields child-fields7 ">
-                            <input type="text" placeholder="38000">
-                        </div>
+    header("HTTP/1.1 303 See Other"); 
+    header('Location: ' . $checkout_session->url);
+    exit;
 
-                    </div>
+} catch (\Stripe\Exception\ApiErrorException $e) {
+    error_log("Stripe API Error: " . $e->getMessage());
+    $_SESSION['checkout_error'] = 'There was an issue connecting to the payment gateway. Please try again later. Details: ' . $e->getMessage();
+    header('Location: ' . $DOMAIN . '/cart.php?error=payment_gateway_error');
+    exit;
+} catch (Exception $e) {
+    error_log("General Error during checkout: " . $e->getMessage());
+    $_SESSION['checkout_error'] = 'An unexpected error occurred. Please try again. Details: ' . $e->getMessage();
+    header('Location: ' . $DOMAIN . '/cart.php?error=unknown_error'); 
+    exit;
+}
 
-                    <div class="child-detail-inner">
-
-                        <div class="child-fields Address-field">
-                            <input type="text" style="color: #676767;" placeholder="United kingdom">
-
-                        </div>
-                    </div>
-                    <div class="child-detail-inner">
-
-                        <div class="child-fields child-fields8">
-                            <input type="text" placeholder="+1 0000-0000-0000">
-                        </div>
-                        <div class="child-fields child-fields9">
-                            <input type="text" placeholder="example@email.com">
-                        </div>
-                    </div>
-                    <div class="child-register-btn">
-                        <span class="error-ms"></span>
-                        <p onclick="checkFields()">Proceed To Pay</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <script src="js/checkout-script.js"></script>
-    </div>
-</body>
-<?php require_once './includes/footer.php'; ?>
+?>
