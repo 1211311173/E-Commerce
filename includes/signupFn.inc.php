@@ -52,34 +52,34 @@ function pwdMatch($pwd,$rpwd) {
 
 function createUser($name,$email,$address,$pwd,$number){
     //making config as we need this everytime we can just use it through include_once
-//1st step for database php connection
-$serverName = "localhost";
-$dBUsername = "root";
-$dBPassword = "";
-$dBName = "electric-shop";
+    //1st step for database php connection
+    $serverName = "localhost";
+    $dBUsername = "root";
+    $dBPassword = "";
+    $dBName = "db_ecommerce";
 
-//Before we can access data in the MySQL database, we need to be able to connect to the server i.e php
-$conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName );
+    //Before we can access data in the MySQL database, we need to be able to connect to the server i.e php
+    $conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName);
 
-// Check connection
-if(!$conn){
-    die("Connection failed: ".$conn->connect_error());
-}
+    // Check connection
+    if(!$conn){
+        die("Connection failed: ".$conn->connect_error());
+    }
 
+    // Hash the password using PHP's built-in password_hash function
+    $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-
-       //using prepare statement for preventing injection
-       $sql = $conn->prepare("INSERT INTO customer (customer_fname,customer_email,customer_pwd,customer_phone,customer_address) VALUES (?,?,?,?,?)");
-    
-       $sql->bind_param('sssss',$name,$email,$pwd,$number,$address);
-       $sql->execute();
-     
+    //using prepare statement for preventing injection
+    $sql = $conn->prepare("INSERT INTO customer (customer_fname,customer_email,customer_pwd,customer_phone,customer_address) VALUES (?,?,?,?,?)");
+ 
+    $sql->bind_param('sssss',$name,$email,$hashedPwd,$number,$address);
+    $sql->execute();
+  
     //after saving user data to database redirecting user to add page
     header("location: ../index.php?userSuccessfullycreated!loginNow");
-    
-       //last step closing connection
-       $conn->close();
-       $sql->close(); //closing prepare statement
-    
-    }
+ 
+    //last step closing connection
+    $conn->close();
+    $sql->close(); //closing prepare statement
+}
     

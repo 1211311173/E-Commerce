@@ -114,18 +114,19 @@
                 die();
             } else {
                 $email = mysqli_real_escape_string($conn, $_POST['userEmail']);
-                //   $password = md5($_POST['password']);
-                $password =$_POST['password'];
+                $password = $_POST['password'];
             
-                $sql = "SELECT customer_email, customer_pwd FROM customer WHERE customer_email = '{$email}' AND customer_pwd= '{$password}'";
+                $sql = "SELECT customer_id, customer_email, customer_pwd FROM customer WHERE customer_email = '{$email}'";
             
                 $result = mysqli_query($conn, $sql) or die("Query Failed.");
             
                 if (mysqli_num_rows($result) > 0) {
-                    $_SESSION['logged-in'] = '1';
-                    header("Location: ./post.php");
+                    $row = mysqli_fetch_assoc($result);
+                    if (password_verify($password, $row['customer_pwd'])) {
+                        $_SESSION['logged-in'] = '1';
+                        header("Location: ./post.php");
                     } else {
-                    echo '<div class="alert alert-danger">Username and Password are not matched.</div>';
+                        echo '<div class="alert alert-danger">Username and Password are not matched.</div>';
                     }
                 }
             }

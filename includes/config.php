@@ -8,7 +8,7 @@ $dBPassword = "";
 $dBName = "db_ecommerce";
 
 //Before we can access data in the MySQL database, we need to be able to connect to the server i.e php
-$conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName );
+$conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName);
 
 // Check connection
 if(!$conn){

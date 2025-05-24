@@ -148,21 +148,19 @@ $result = $conn->query($sql);
 
 if($result->num_rows==1){ //if any one data found go inside it
     $row = $result->fetch_assoc();
-    if($password == $row['customer_pwd']){
+    if(password_verify($password, $row['customer_pwd'])){
+        //session will be created only if users email and passwords matched
+        session_start();
+        $_SESSION['id'] = $row['customer_id'];
+        $_SESSION['customer_role'] = $row['customer_role'];
 
-    //session will be created only if users email and passwords matched
-	session_start();
-	$_SESSION['id'] = $row['customer_id'];
-	$_SESSION['customer_role'] = $row['customer_role'];
-
-    header("location:profile.php?id={$_SESSION['id']}");
-            // put exit after a redirect as header() does not stop execution
-            exit;}else{
-                echo "<h4 id='error_login'>Incorrect password</h4>";//as user get inside if statem if userEmail matched
-            }
-
-
-}else{
+        header("location:profile.php?id={$_SESSION['id']}");
+        // put exit after a redirect as header() does not stop execution
+        exit;
+    } else {
+        echo "<h4 id='error_login'>Incorrect password</h4>";
+    }
+} else {
     if($_POST['email']){ //it means it will run if email field is filled
     echo "<h4 id='error_login'>(unavailable) please signup first</h4>";
     }
