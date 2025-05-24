@@ -100,36 +100,22 @@ if ($product_category == "deal_of_day") {
                   name="product_qty" id="p_qty" />
                 <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?> " />
                 <button type="button" class="btn_product_decrement">-</button>
-              </div>
-              <!-- submit -->
+              </div>              <!-- submit -->
               <div class="buy-and-cart-btn">
                 <button type="submit" name="add_to_cart" class="btn_product_cart">
                   Add to Cart
                 </button>
-                <button type="submit" formaction="checkout.php" name="buy_now_action" class="btn_but_product">Buy</button>
+                <?php if (isset($_SESSION['id'])): ?>
+                  <button type="submit" formaction="checkout.php" name="buy_now_action" class="btn_but_product">Buy</button>
+                <?php else: ?>
+                  <button type="button" onclick="redirectToLogin()" class="btn_but_product">Buy</button>
+                <?php endif; ?>
               </div>
             </div>
           </div>
         </div>
-        <!-- reviews -->
       </form>
     </div>
-    <script>
-      let btn_product_decrement = document.querySelector('.btn_product_decrement');
-      let btn_product_increment = document.querySelector('.btn_product_increment');
-      let change_qty = document.getElementById('p_qty');
-
-      btn_product_decrement.addEventListener('click', function () {
-        if (change_qty.value == 1) {
-          change_qty.value = 1;
-        }
-        else {
-          change_qty.value = (change_qty.value) - 1;
-        }
-      });
-      btn_product_increment.addEventListener('click', function () {
-        change_qty.value = parseInt(change_qty.value) + 1;
-      });
-    </script>
+    <script src="js/viewdetail.js"></script>
   </div>
   <?php require_once './includes/footer.php'; ?>

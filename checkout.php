@@ -1,6 +1,26 @@
 <?php
 session_start();
 
+// Check if user is logged in
+if (!isset($_SESSION['id'])) {
+    // Redirect to login page with return URL
+    $return_url = '';
+    if (isset($_POST['buy_now_action'])) {
+        // For buy now actions, redirect back to product page
+        $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : '';
+        $product_category = isset($_POST['product_category']) ? $_POST['product_category'] : '';
+        if ($product_id && $product_category) {
+            $return_url = urlencode("viewdetail.php?id=" . $product_id . "&category=" . $product_category);
+        }
+    } else {
+        // For cart checkout, redirect back to cart
+        $return_url = urlencode("cart.php");
+    }
+    
+    header('Location: login.php' . ($return_url ? '?redirect=' . $return_url : ''));
+    exit;
+}
+
 if (
     $_SERVER['REQUEST_METHOD'] !== 'POST' || (!isset($_POST['proceed_to_checkout_action']) && !isset($_POST['buy_now_action']))
 ) {

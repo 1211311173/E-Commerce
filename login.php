@@ -1,8 +1,19 @@
 <?php session_start();
 
-// Redirect logged-in users to home page
+// Redirect logged-in users to appropriate page
 if (isset($_SESSION['id'])) {
-    header("location: index.php");
+    $redirect_url = "index.php";
+    if (isset($_GET['redirect']) && !empty($_GET['redirect'])) {
+        $redirect_url = urldecode($_GET['redirect']);
+        // Basic security check - ensure it's a relative URL
+        if (strpos($redirect_url, 'http') === false && strpos($redirect_url, '//') === false) {
+            // It's a relative URL, safe to redirect
+        } else {
+            // Reset to default for security
+            $redirect_url = "index.php";
+        }
+    }
+    header("location: " . $redirect_url);
     exit;
 }
 
@@ -48,13 +59,25 @@ if (isset($_POST['login'])) {
 
     if ($result->num_rows == 1) { //if any one data found go inside it
       $row = $result->fetch_assoc();
-      if (password_verify($password, $row['customer_pwd'])) {
-        //session will be created only if users email and passwords matched
+      if (password_verify($password, $row['customer_pwd'])) {        //session will be created only if users email and passwords matched
         session_start();
         $_SESSION['id'] = $row['customer_id'];
         $_SESSION['customer_role'] = $row['customer_role'];
 
-        header("location:profile.php?id={$_SESSION['id']}");
+        // Check for redirect parameter
+        $redirect_url = "profile.php?id={$_SESSION['id']}";
+        if (isset($_GET['redirect']) && !empty($_GET['redirect'])) {
+            $redirect_url = urldecode($_GET['redirect']);
+            // Basic security check - ensure it's a relative URL
+            if (strpos($redirect_url, 'http') === false && strpos($redirect_url, '//') === false) {
+                // It's a relative URL, safe to redirect
+            } else {
+                // Reset to default for security
+                $redirect_url = "profile.php?id={$_SESSION['id']}";
+            }
+        }
+
+        header("location: " . $redirect_url);
         // put exit after a redirect as header() does not stop execution
         exit;
       } else {
@@ -85,7 +108,7 @@ if (isset($_POST['login'])) {
 
   <?php
   if (!(isset($_SESSION['id']))) {
-    ?>    <form action="<?php echo $_SERVER['PHP_SELF']; ?> " method="post">
+    ?>    <form action="<?php echo $_SERVER['PHP_SELF'] . (isset($_GET['redirect']) ? '?redirect=' . urlencode($_GET['redirect']) : ''); ?> " method="post">
       <div class="logo-box">
         <img src="admin/upload/<?php echo $_SESSION['web-img']; ?>" alt="logo" width="200px" />
       </div>
@@ -113,9 +136,6 @@ if (isset($_POST['login'])) {
         </div>
       </div>
       <div class="row mb-3">
-        <!-- <label for="inputPassword3" class="col-sm-2 col-form-label"
-          >Password</label
-        > -->
         <div class="col-sm-12">
           <input id="inputPassword" name="pwd" type="password" class="form-control" placeholder="Password" />
         </div>
