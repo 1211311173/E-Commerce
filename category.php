@@ -44,7 +44,7 @@ $items = get_items_by_category_items($category_ID);
           - SIDEBAR
         -->
       <!-- CATEGORY SIDE BAR MOBILE MENU -->
-    <?php require_once 'includes/categorysidebar.php' ?>
+      <?php require_once 'includes/categorysidebar.php' ?>
 
       <!-- ############################# -->
 
@@ -61,38 +61,41 @@ $items = get_items_by_category_items($category_ID);
             $new_product_counter = 1;
             while ($row = mysqli_fetch_assoc($items)) {
 
-            ?>
+              ?>
               <!-- display all category products -->
               <div class="showcase">
                 <div class="showcase-banner">
                   <img src="./admin/upload/<?php
-                                                      echo $row['product_img']
-                                                      ?>" alt="Mens Winter Leathers Jackets" width="300" class="product-img default" />
+                  echo $row['product_img']
+                    ?>" alt="Mens Winter Leathers Jackets" width="300"
+                    class="product-img default" />
                   <img src="./admin/upload/<?php
-                                                      echo $row['product_img']
-                                                      ?>" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover" />
+                  echo $row['product_img']
+                    ?>" alt="Mens Winter Leathers Jackets" width="300"
+                    class="product-img hover" />
                   <!-- Applying coditions on dicount and sale tags  -->
                   <!--  -->
                   <?php
                   if ($new_product_counter == 1) {
-                  ?>
+                    ?>
                     <p class="showcase-badge">15%</p>
-                  <?php
+                    <?php
                   }
                   ?>
                   <!--  -->
                   <?php
                   if ($new_product_counter == 3) {
-                  ?>
+                    ?>
                     <p class="showcase-badge angle black">sale</p>
-                  <?php
+                    <?php
                   }
                   ?>
 
                 </div>
 
                 <div class="showcase-content">
-                  <a href="./viewdetail.php?id=<?php echo $row['product_id'] ?>&category=<?php $row['category_id'] ?>" class="showcase-category">
+                  <a href="./viewdetail.php?id=<?php echo $row['product_id'] ?>&category=<?php $row['category_id'] ?>"
+                    class="showcase-category">
                     <?php echo $row['product_title'] ?>
                   </a>
 
@@ -121,7 +124,7 @@ $items = get_items_by_category_items($category_ID);
                 </div>
               </div>
 
-            <?php
+              <?php
               $new_product_counter = $new_product_counter + 1;
             }
 
