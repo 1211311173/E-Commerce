@@ -41,10 +41,10 @@
           </a>
         </li>
 
-      <!-- if not logged in reduce opacity  -->
+      <!-- if not logged in remove this shit  -->
       <?php } else { ?>
 
-        <li class="menu-category" style="opacity:0.5">
+        <li class="menu-category" style="display: none;">
           <a style="cursor: not-allowed;" href="#?loginfirst" class="menu-title">
             Profile(Signin Plz)
           </a>
