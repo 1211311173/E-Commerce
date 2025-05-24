@@ -1,4 +1,11 @@
 <?php session_start();
+
+// Redirect logged-in users to home page
+if (isset($_SESSION['id'])) {
+    header("location: index.php");
+    exit;
+}
+
 include_once 'includes/config.php';
 //  all functions
 require_once 'functions/functions.php';
