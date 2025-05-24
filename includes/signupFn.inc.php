@@ -57,9 +57,10 @@ function createUser($name,$email,$address,$pwd,$number){
     $dBUsername = "root";
     $dBPassword = "";
     $dBName = "db_ecommerce";
+    $port = 3307;
 
     //Before we can access data in the MySQL database, we need to be able to connect to the server i.e php
-    $conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName);
+    $conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName,$port);
 
     // Check connection
     if(!$conn){

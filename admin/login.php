@@ -14,7 +14,7 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    
+
     <title>ADMIN | Login</title>
 
     <style>
@@ -96,9 +96,9 @@
 
       <div style="float: right">
 
-        <button 
-        type="submit" 
-        name="login" 
+        <button
+        type="submit"
+        name="login"
         class="btn btn-primary"
         >
             Sign in
@@ -106,20 +106,26 @@
       </div>
     </form>
 
-    <?php 
+    <?php
         if (isset($_POST['login'])) {
             include "includes/config.php";
             if (empty($_POST['userEmail']) || empty($_POST['password'])) {
                 echo '<div class="alert alert-danger">All Fields must be entered.</div>';
                 die();
             } else {
-                $email = mysqli_real_escape_string($conn, $_POST['userEmail']);
+                // Validate and sanitize input
+                $email = InputValidator::validateEmail($_POST['userEmail']);
                 $password = $_POST['password'];
-            
-                $sql = "SELECT customer_id, customer_email, customer_pwd FROM customer WHERE customer_email = '{$email}'";
-            
-                $result = mysqli_query($conn, $sql) or die("Query Failed.");
-            
+
+                if (!$email) {
+                    echo '<div class="alert alert-danger">Invalid email format.</div>';
+                    die();
+                }
+
+                // Use prepared statement to prevent SQL injection
+                $sql = "SELECT customer_id, customer_email, customer_pwd FROM customer WHERE customer_email = ?";
+                $result = $secureDB->select($sql, [$email], 's');
+
                 if (mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                     if (password_verify($password, $row['customer_pwd'])) {
@@ -130,8 +136,6 @@
                     }
                 }
             }
-    ?>
-    
-
-  </body>
+    ?>  
+    </body>
 </html>

@@ -40,14 +40,14 @@
         <div class="product-main">
 
           <h2 class="title">
-            Search: 
-            <?php 
+            Search:
+            <?php
               // Get Item name searching for
               if(isset($_POST['search']))
               {
                 echo $_POST['search'];
               }
-             ?> 
+             ?>
           </h2>
 
           <div class="product-grid">
@@ -65,7 +65,7 @@
                 $seacrh_term = mysqli_real_escape_string($conn, $_POST['search']);
               }
 
-            
+
 
             if (isset($_GET['page'])){
               $page = $_GET['page'];
@@ -81,36 +81,49 @@
               //making search_term string to array each value separated by space
               $search_term_array = explode(" ",$seacrh_term);
 
-              // Loop over each item
-              for($search=0; $search<sizeof($search_term_array); $search++){
-              
-                $array_length = sizeof($search_term_array);
-                
-                if($array_length > 1) {
-
-                  $search_query = "SELECT * FROM products WHERE products.product_title LIKE '%{$search_term_array[$search]}%' AND products.product_catag LIKE '%{$search_term_array[$search+1]}%' ORDER BY products.product_id DESC LIMIT {$offset},{$limit}";
-
-                }
-
-                if($array_length == 1) {
-
-                  $search_query = "SELECT * FROM products WHERE  products.product_title LIKE '%{$search_term_array[$search]}%' OR products.product_catag LIKE '%{$search_term_array[$search]}%' ORDER BY products.product_id DESC LIMIT {$offset},{$limit}";
-
-                }
-
-                break;
+              // Validate and sanitize search terms
+              $sanitized_terms = [];
+              foreach($search_term_array as $term) {
+                  $sanitized_term = InputValidator::validateSearchTerm($term);
+                  if ($sanitized_term !== false) {
+                      $sanitized_terms[] = $sanitized_term;
+                  }
               }
 
-              // Execute search query
-              $search_result = $conn->query($search_query);
+              if (empty($sanitized_terms)) {
+                  echo '<div class="alert alert-danger">Invalid search terms.</div>';
+                  $search_result = false;
+              } else {
+                  $array_length = sizeof($sanitized_terms);
+
+                  // Validate offset and limit
+                  $offset = InputValidator::validateInt($offset, 0);
+                  $limit = InputValidator::validateInt($limit, 1, 50);
+
+                  if ($offset === false) $offset = 0;
+                  if ($limit === false) $limit = 12;
+
+                  if($array_length > 1) {
+                      // Use prepared statement for multiple terms
+                      $search_query = "SELECT * FROM products WHERE products.product_title LIKE ? AND products.product_catag LIKE ? ORDER BY products.product_id DESC LIMIT ?, ?";
+                      $term1 = '%' . $sanitized_terms[0] . '%';
+                      $term2 = '%' . $sanitized_terms[1] . '%';
+                      $search_result = $secureDB->select($search_query, [$term1, $term2, $offset, $limit], 'ssii');
+                  } else {
+                      // Use prepared statement for single term
+                      $search_query = "SELECT * FROM products WHERE products.product_title LIKE ? OR products.product_catag LIKE ? ORDER BY products.product_id DESC LIMIT ?, ?";
+                      $term = '%' . $sanitized_terms[0] . '%';
+                      $search_result = $secureDB->select($search_query, [$term, $term, $offset, $limit], 'ssii');
+                  }
+              }
               $new_product_counter = 1;
 
-            // Query used earlier 
+            // Query used earlier
             // $search_query = "SELECT * FROM PRODUCT WHERE product.name LIKE '%$get_seach_value%' ";
             // $run_search = mysqli_query($connect,$search_query);
-            if($search_result->num_rows > 0) {
+            if($search_result && $search_result->num_rows > 0) {
 
-            
+
             while ($row = mysqli_fetch_assoc($search_result)) {
 
             ?>
@@ -125,7 +138,7 @@
                                                       ?>" alt="search result images" width="300" class="product-img hover" />
                   <!-- Applying coditions on dicount and sale tags  -->
                   <!--  -->
-                
+
 
                   <div class="showcase-actions">
                     <button class="btn-action">
@@ -180,10 +193,10 @@
 
             <?php
               $new_product_counter = $new_product_counter + 1;
-             }} else { 
+             }} else {
               echo "<h4 style='color:red; margin-left:8%;border:1px solid aliceblue'>"."No record found"."</h4>";
             }
-             $conn->close(); 
+             $conn->close();
             ?>
 
             <!--  -->
@@ -196,9 +209,9 @@
 <!--Pagination-->
 <div class="pag-cont-search">
 <?php
-                include "includes/config.php"; 
+                include "includes/config.php";
 
-               // Pagination btn using php with active effects 
+               // Pagination btn using php with active effects
 
                 $sql1 = "SELECT * FROM products";
                 $result1 = mysqli_query($conn, $sql1) or die("Query Failed.");
@@ -208,8 +221,8 @@
                   $total_products = mysqli_num_rows($search_result);
                   $total_page = ceil($total_products / $limit);
 
-                  echo "<div class='pagination'>";  
-          
+                  echo "<div class='pagination'>";
+
                   for($i=1; $i<=$total_page; $i++){
 
                     //important this is for active effects that denote in which page you are in current position
@@ -221,7 +234,7 @@
 
                         echo "<a href='search.php?page={$i}' class='{$active}'>".$i."</a>";
                   }
-            
+
                 }
                 echo "</div>";
 
@@ -230,7 +243,7 @@
                  echo "<h4 style='color:red; margin-left:8%;border:1px solid aliceblue'>"."ERR_Insert on Search"."</h4>";
                }
                ?>
-	
+
 </div>
 
 

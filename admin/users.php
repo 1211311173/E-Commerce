@@ -1,5 +1,5 @@
 
-<?php 
+<?php
     include_once('./includes/headerNav.php');
     include_once('./includes/restriction.php');
     if(!(isset($_SESSION['logged-in']))){
@@ -11,7 +11,7 @@
 <hr>
 <?php
   include "includes/config.php";
-     
+
         /* define how much data to show in a page from database*/
         $limit = 4;
         if(isset($_GET['page'])){
@@ -38,10 +38,18 @@
         //define from which row to start extracting data from database
         $offset = ($page - 1) * $limit;
 
-$sql = "SELECT * FROM customer LIMIT {$offset},{$limit}";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) { ?>
-    
+        // Validate offset and limit
+        $offset = InputValidator::validateInt($offset, 0);
+        $limit = InputValidator::validateInt($limit, 1, 100);
+
+        if ($offset === false) $offset = 0;
+        if ($limit === false) $limit = 4;
+
+        // Use prepared statement to prevent SQL injection
+        $sql = "SELECT * FROM customer LIMIT ?, ?";
+        $result = $secureDB->select($sql, [$offset, $limit], 'ii');
+if ($result && $result->num_rows > 0) { ?>
+
     <div class="table-cont">
     <table class="table">
   <thead>
@@ -51,12 +59,12 @@ if ($result->num_rows > 0) { ?>
       <th scope="col">Phone</th>
       <th scope="col">Address</th>
       <th scope="col">Role</th>
-      <th scope="col">Edit</th>      
-      <th scope="col">Delete</th>      
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
-<?php 
+<?php
 // output data of each row
 while($row = $result->fetch_assoc()) {
     $sn = $sn+1;
@@ -64,23 +72,23 @@ while($row = $result->fetch_assoc()) {
     <tr>
       <th scope="row"><?php echo $sn ?></th>
       <td><?php echo $row["customer_fname"] ?></td>
-      <td><?php echo $row["customer_phone"] ?></td>    
+      <td><?php echo $row["customer_phone"] ?></td>
       <td scope="row"><?php echo $row["customer_address"] ?></td>
       <td><?php echo $row["customer_role"] ?></td>
       <td>
         <a class="fn_link" href="update-user.php?id=<?php echo $row["customer_id"] ?>">
         <i class='fa fa-edit'></i>
         </a>
-      </td>          
+      </td>
       <td scope="row">
         <a class="fn_link" href="remove-user.php?id=<?php echo $row["customer_id"] ?>">
           <i class='fa fa-trash'></i>
         </a>
-      </td>         
+      </td>
     </tr>
 
 <?php }}else { echo "0 results"; }
-             $conn->close(); 
+             $conn->close();
              ?>
 
 </table>
@@ -88,8 +96,8 @@ while($row = $result->fetch_assoc()) {
 
 <!--Pagination-->
 <?php
-    include "includes/config.php"; 
-    // Pagination btn using php with active effects 
+    include "includes/config.php";
+    // Pagination btn using php with active effects
     $sql1 = "SELECT * FROM customer";
     $result1 = mysqli_query($conn, $sql1) or die("Query Failed.");
 
@@ -101,7 +109,7 @@ while($row = $result->fetch_assoc()) {
       <ul class="pagination pagination-sm">
 
 
-<?php 
+<?php
         for($i=1; $i<=$total_page; $i++){
             //important this is for active effects that denote in which page you are in current position
             if($page==$i) {

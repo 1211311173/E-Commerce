@@ -1,11 +1,27 @@
-<?php 
+<?php
     include_once('./includes/headerNav.php');
     include_once('./includes/restriction.php');
 
-    //this will provide previous user value before updating 
+    //this will provide previous user value before updating
     include "includes/config.php";
-    $sql = "SELECT * FROM products where product_id={$_GET['id']}";
-    $result = $conn->query($sql);
+
+    // Validate the product ID
+    $product_id = InputValidator::validateInt($_GET['id'], 1);
+
+    if ($product_id === false) {
+        header("Location:post.php?error=invalid_id");
+        exit();
+    }
+
+    // Use prepared statement to prevent SQL injection
+    $sql = "SELECT * FROM products WHERE product_id = ?";
+    $result = $secureDB->select($sql, [$product_id], 'i');
+
+    if (!$result || $result->num_rows === 0) {
+        header("Location:post.php?error=product_not_found");
+        exit();
+    }
+
     // output data of each row
     $row = $result->fetch_assoc();
     $_SESSION['previous_title'] = $row['product_title'];
@@ -133,19 +149,38 @@
    if(isset($_POST['update'])){
     //below sql will update user details inside sql table when update is clicked
     include "includes/config.php";
-    $sql1 = "UPDATE products
-             SET  product_title= '{$_POST['title']}' ,
-                  product_catag= '{$_POST['catag']}' ,
-                  product_price= '{$_POST['price']}' ,
-                  discounted_price= '{$_POST['discount']}',
-                  product_desc= '{$_POST['desc']}',
-                  product_img= '{$_POST['newimg']}',
-                  product_left= '{$_POST['noofitem']}' 
-             WHERE product_id={$_GET['id']} ";
-    $conn->query($sql1);   
-    
-    $conn->close();
-    header("Location:http://localhost/electronics_shop/admin/post.php?succesfullyUpdated");
-    
+
+    // Validate the product ID again
+    $product_id = InputValidator::validateInt($_GET['id'], 1);
+
+    if ($product_id === false) {
+        header("Location:post.php?error=invalid_id");
+        exit();
+    }
+
+    // Validate and sanitize input data
+    $title = InputValidator::sanitizeString($_POST['title'], 255);
+    $category = InputValidator::sanitizeString($_POST['catag'], 50);
+    $price = InputValidator::validateFloat($_POST['price'], 0);
+    $discount = InputValidator::validateFloat($_POST['discount'], 0);
+    $description = InputValidator::sanitizeString($_POST['desc'], 1000);
+    $image = InputValidator::sanitizeString($_POST['newimg'], 255);
+    $noofitem = InputValidator::validateInt($_POST['noofitem'], 0);
+
+    if ($price === false || $discount === false || $noofitem === false) {
+        header("Location:update-post.php?id={$product_id}&error=invalid_data");
+        exit();
+    }
+
+    // Use prepared statement to prevent SQL injection
+    $sql1 = "UPDATE products SET product_title = ?, product_catag = ?, product_price = ?, discounted_price = ?, product_desc = ?, product_img = ?, product_left = ? WHERE product_id = ?";
+    $result = $secureDB->update($sql1, [$title, $category, $price, $discount, $description, $image, $noofitem, $product_id], 'ssddssii');
+
+    if ($result) {
+        header("Location:post.php?succesfullyUpdated");
+    } else {
+        header("Location:update-post.php?id={$product_id}&error=update_failed");
+    }
+    exit();
    }
 ?>

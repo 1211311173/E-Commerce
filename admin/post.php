@@ -1,4 +1,4 @@
-<?php 
+<?php
     include_once('./includes/headerNav.php');
     include_once('./includes/restriction.php');
     if(!(isset($_SESSION['logged-in']))){
@@ -18,7 +18,7 @@
 <hr>
 
 <?php
-                  include "includes/config.php"; 
+                  include "includes/config.php";
                   /* define how much data to show in a page from database*/
                   $limit = 10;
                   if(isset($_GET['page'])){
@@ -45,21 +45,29 @@
                   //define from which row to start extracting data from database
                   $offset = ($page - 1) * $limit; //remember offset formula this is why we need page var here
 
+                  // Validate offset and limit
+                  $offset = InputValidator::validateInt($offset, 0);
+                  $limit = InputValidator::validateInt($limit, 1, 100);
+
+                  if ($offset === false) $offset = 0;
+                  if ($limit === false) $limit = 10;
+
                   if($_SESSION["customer_role"] == 'admin'){
                     /* select query of post table for admin user */
                     //this will fetch product data in descending order with applied limitation per page
-                    $sql = "SELECT * FROM products
-                            ORDER BY products.product_id DESC LIMIT {$offset},{$limit}";
+                    $sql = "SELECT * FROM products ORDER BY products.product_id DESC LIMIT ?, ?";
+                    $result = $secureDB->select($sql, [$offset, $limit], 'ii');
 
                   }elseif($_SESSION["user_role"] == 'normal'){
                     /* select query of post table for normal user */
-                    $sql = "SELECT * FROM products WHERE product_author='{$_SESSION['customer_name']}'
-                            ORDER BY products.product_id DESC LIMIT {$offset},{$limit}";
+                    $author_name = InputValidator::sanitizeString($_SESSION['customer_name'], 100);
+                    $sql = "SELECT * FROM products WHERE product_author = ? ORDER BY products.product_id DESC LIMIT ?, ?";
+                    $result = $secureDB->select($sql, [$author_name, $offset, $limit], 'sii');
+                  } else {
+                    $result = false;
                   }
-
-                  $result = $conn->query($sql) or die("Query Failed.");
                   //means if no of rows found on the basis of query is >0 then goes inside if
-                  if ($result->num_rows > 0) {
+                  if ($result && $result->num_rows > 0) {
                 ?>
 
 <div class="table-cont">
@@ -104,9 +112,9 @@
       </td>
     </tr>
 
-<?php 
+<?php
   }} else { echo "0 results"; }
-  $conn->close(); 
+  $conn->close();
 ?>
 </tbody>
 <!-- tabledata body end -->
@@ -115,8 +123,8 @@
 </div>
 <!--Pagination-->
 <?php
-    include "includes/config.php"; 
-    // Pagination btn using php with active effects 
+    include "includes/config.php";
+    // Pagination btn using php with active effects
 
     $sql1 = "SELECT * FROM products";
     $result1 = mysqli_query($conn, $sql1) or die("Query Failed.");
@@ -130,7 +138,7 @@
       <ul class="pagination pagination-sm">
 
 
-        <?php 
+        <?php
             for($i=1; $i<=$total_page; $i++){
                 //important this is for active effects that denote in which page you are in current position
                 if ($page==$i) {

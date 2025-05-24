@@ -20,14 +20,14 @@
     }
 
 
-    // get categories 
+    // get categories
     function get_categories(){
         global $conn;
         $query = "SELECT * FROM category WHERE category.status = 1";
 
         return $result = mysqli_query($conn, $query);
     }
-    
+
     // get clothes category
     function get_clothes_category(){
         global $conn;
@@ -88,7 +88,7 @@
         // ON products.section_id = section.id
         // WHERE section.id = 6 AND section.status = 1";
         $query = "SELECT * FROM products LIMIT 4;";
-        
+
 
         return $result = mysqli_query($conn, $query);
     }
@@ -128,7 +128,7 @@
     function get_deal_of_day(){
         global $conn;
         $query = "SELECT * FROM deal_of_the_day WHERE deal_of_the_day.deal_status = 1";
-        
+
 
         return $result = mysqli_query($conn, $query);
     }
@@ -142,28 +142,41 @@
 
         return $result = mysqli_query($conn, $query);
     }
-    
+
 
     function display_electronic_category(){
         global $connect;
         $query = "SELECT * FROM category_electronics WHERE category_electronics.status = 1";
 
-        
+
         return $result = mysqli_query($connect, $query);
     }
 
-    // get product through id from product table 
+    // get product through id from product table
     function get_product($id){
-        global $conn;
-        $query = "SELECT * FROM products WHERE products.product_id = $id";
-        return $result = mysqli_query($conn, $query);
+        global $secureDB;
+
+        // Validate the product ID
+        $product_id = InputValidator::validateInt($id, 1);
+        if ($product_id === false) {
+            return false;
+        }
+
+        $query = "SELECT * FROM products WHERE products.product_id = ?";
+        return $secureDB->select($query, [$product_id], 'i');
     }
 
         // get specific category
     function get_items_by_category_items($category){
-        global $conn;
-        $query = "SELECT * FROM products WHERE products.product_catag = '$category' AND products.status = 1";
+        global $secureDB;
 
-        return $result = mysqli_query($conn, $query);
+        // Validate and sanitize category
+        $safe_category = InputValidator::sanitizeString($category, 50);
+        if (empty($safe_category)) {
+            return false;
+        }
+
+        $query = "SELECT * FROM products WHERE products.product_catag = ? AND products.status = 1";
+        return $secureDB->select($query, [$safe_category], 's');
     }
 ?>

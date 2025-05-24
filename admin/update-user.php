@@ -1,8 +1,8 @@
-<?php 
+<?php
     include_once('./includes/headerNav.php');
     include_once('./includes/restriction.php');
 
-    //this will provide previous user value before updating 
+    //this will provide previous user value before updating
     include "includes/config.php";
     $sql = "SELECT * FROM customer where customer_id={$_GET['id']}";
     $result = $conn->query($sql);
@@ -30,7 +30,7 @@
             border-radius: 16px;
             background-color: #f1f1f1;
          }
-         
+
      </style>
  </head>
 
@@ -69,7 +69,7 @@
       <div class="col-md-4">
         <label for="inputState" class="form-label">Role</label>
         <select id="role_update" name="role" class="form-select">
-          <?php 
+          <?php
        if($_SESSION['previous_role']=='admin'){
            ?>
           <option value="admin" selected>Admin</option>
@@ -96,16 +96,42 @@
    if(isset($_POST['update'])){
     //below sql will update user details inside sql table when update is clicked
     include "includes/config.php";
-    $sql1 = "UPDATE customer 
-             SET  customer_fname= '{$_POST['name']}' ,
-                  customer_phone= '{$_POST['phone']}' ,
-                  customer_address= '{$_POST['address']}' ,
-                  customer_role= '{$_POST['role']}' 
-             WHERE customer_id={$_GET['id']} ";
-    $conn->query($sql1);   
-    
-    $conn->close();
-    header("Location:http://localhost/E-commerce/admin/update-user.php?succesfullyUpdated");
-    // http://localhost/E-commerce/admin/update-user.php?id=9
+
+    // Validate the customer ID
+    $customer_id = InputValidator::validateInt($_GET['id'], 1);
+
+    if ($customer_id === false) {
+        header("Location:users.php?error=invalid_id");
+        exit();
+    }
+
+    // Validate and sanitize input data
+    $name = InputValidator::sanitizeString($_POST['name'], 100);
+    $phone = InputValidator::validatePhone($_POST['phone']);
+    $address = InputValidator::sanitizeString($_POST['address'], 255);
+    $role = InputValidator::sanitizeString($_POST['role'], 20);
+
+    if ($phone === false || empty($name) || empty($address) || empty($role)) {
+        header("Location:update-user.php?id={$customer_id}&error=invalid_data");
+        exit();
+    }
+
+    // Validate role (only allow specific values)
+    $allowed_roles = ['admin', 'normal', 'customer'];
+    if (!in_array($role, $allowed_roles)) {
+        header("Location:update-user.php?id={$customer_id}&error=invalid_role");
+        exit();
+    }
+
+    // Use prepared statement to prevent SQL injection
+    $sql1 = "UPDATE customer SET customer_fname = ?, customer_phone = ?, customer_address = ?, customer_role = ? WHERE customer_id = ?";
+    $result = $secureDB->update($sql1, [$name, $phone, $address, $role, $customer_id], 'ssssi');
+
+    if ($result) {
+        header("Location:update-user.php?id={$customer_id}&succesfullyUpdated");
+    } else {
+        header("Location:update-user.php?id={$customer_id}&error=update_failed");
+    }
+    exit();
    }
 ?>

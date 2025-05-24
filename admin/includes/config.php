@@ -6,12 +6,19 @@ $serverName = "localhost";
 $dBUsername = "root";
 $dBPassword = "";
 $dBName = "db_ecommerce";
+$port = 3307;
 
 //Before we can access data in the MySQL database, we need to be able to connect to the server i.e php
-$conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName );
+$conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName, $port );
 
 // Check connection
 if(!$conn){
     die("Connection failed: ".$conn->connect_error());
 }
+
+// Set charset to prevent character set confusion attacks
+$conn->set_charset("utf8");
+
+// Include security functions
+require_once __DIR__ . '/../../includes/security.php';
 ?>

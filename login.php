@@ -58,7 +58,7 @@ require_once 'functions/functions.php';
   </head>
   <body>
 
-  	 <?php 
+  	 <?php
      if( !( isset( $_SESSION['id']))){
      ?>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?> " method="post">
@@ -107,17 +107,17 @@ require_once 'functions/functions.php';
         </div>
       </div>
       <div style="float: right">
-        <button 
-        type="submit" 
+        <button
+        type="submit"
         class="btn btn-primary">
         <a href="./signup.php" id="signup-btn">
              Sign up
 		</a>
-           
+
         </button>
 
-        <button 
-        type="submit" 
+        <button
+        type="submit"
         class="btn btn-primary"
         name="login">
             Sign in
@@ -127,7 +127,7 @@ require_once 'functions/functions.php';
 
 	<?php }?>
 
-    
+
 	<?php
  //1st step(i.e connection) done through config file
 if(isset($_POST['login'])){
@@ -140,11 +140,16 @@ if(isset($_POST['login'])){
         echo "<h4 id='error_login'>Enter password</h4>";
  }
 
-$email = mysqli_real_escape_string($conn,$_POST['email']);
-$password =mysqli_real_escape_string($conn,$_POST['pwd']);
+// Validate and sanitize input
+$email = InputValidator::validateEmail($_POST['email']);
+$password = $_POST['pwd'];
 
-$sql ="SELECT * FROM  customer WHERE customer_email='{$email}';";
-$result = $conn->query($sql);
+if (!$email) {
+    echo "<h4 id='error_login'>Invalid email format</h4>";
+} else {
+    // Use prepared statement to prevent SQL injection
+    $sql = "SELECT * FROM customer WHERE customer_email = ?";
+    $result = $secureDB->select($sql, [$email], 's');
 
 if($result->num_rows==1){ //if any one data found go inside it
     $row = $result->fetch_assoc();
@@ -160,9 +165,10 @@ if($result->num_rows==1){ //if any one data found go inside it
     } else {
         echo "<h4 id='error_login'>Incorrect password</h4>";
     }
-} else {
-    if($_POST['email']){ //it means it will run if email field is filled
-    echo "<h4 id='error_login'>(unavailable) please signup first</h4>";
+    } else {
+        if($_POST['email']){ //it means it will run if email field is filled
+        echo "<h4 id='error_login'>(unavailable) please signup first</h4>";
+        }
     }
 }
 }//end of 1st ifstatement
