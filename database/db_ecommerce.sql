@@ -213,7 +213,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `customer_fname`, `customer_email`, `customer_pwd`, `customer_phone`, `customer_address`, `customer_role`) VALUES
-(9, 'FahadAdmin', 'dev.shahfahad@gmail.com', 'adminfahad', '03469589557', 'Peshawar, Pakistan', 'admin');
+(9, 'FahadAdmin', 'dev.shahfahad@gmail.com', '$2y$10$Sbt8xXQuKt74so7nd9AD1.RsgV/8Q.ZGen/XaR5d9lrRzHicnV0Hm', '03469589557', 'Peshawar, Pakistan', 'admin');
 
 -- --------------------------------------------------------
 
