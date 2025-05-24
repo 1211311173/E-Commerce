@@ -4,10 +4,9 @@ table {
     width: 100%;
 }
 
-td,
-th {
+td, th {
     border: 1px solid #dddddd;
-    text-align: left;
+    text-align: center;
     padding: 8px;
 }
 .cart-product-image{
@@ -16,6 +15,7 @@ th {
 }
 .btn-remove{
     background-color: #FF0000;
+    display: inline-block;
     width: 80px;
     height: 48px;
     color: #FFF;

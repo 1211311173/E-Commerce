@@ -19,7 +19,7 @@ td img{
     margin-left:auto;
     margin-right:auto;
 }
-.child-register-btn p {
+.child-register-btn button {
     width: 350px;
     height: 60px;
     background-color: var( --main-maroon);

@@ -1,73 +1,73 @@
 <?php include_once('./includes/headerNav.php'); ?>
+
 <div class="overlay" data-overlay></div>
-<!--
-  - HEADER
-  -->
+
+<!-- HEADER -->
 <header>
-  <!-- top head action, search etc in php -->
-  <!-- inc/topheadactions.php -->
+  <!-- Top head action, search etc -->
   <?php require_once './includes/topheadactions.php'; ?>
-  <!-- desktop navigation -->
-  <!-- inc/desktopnav.php -->
-  <?php require_once './includes/desktopnav.php' ?>
-  <!-- mobile nav in php -->
-  <!-- inc/mobilenav.php -->
+  <!-- Desktop navigation -->
+  <?php require_once './includes/desktopnav.php'; ?>
+  <!-- Mobile navigation -->
   <?php require_once './includes/mobilenav.php'; ?>
-  <!-- style -->
+  <!-- Styles -->
   <link rel="stylesheet" href="css/cart-styles.css">
 </header>
-<!--
-  - MAIN
-  -->
+
+<!-- MAIN CONTENT -->
 <main>
   <div class="product-container">
     <div class="container">
-      <!--
-        - SIDEBAR
-       -->
       <table>
-        <tr>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Quantity</th>
-        </tr>
-        <?php
-        if (isset($_SESSION['mycart'])) {
-          foreach ($_SESSION['mycart'] as $value) {
-            ?>
-            <tr>
-              <td>
-                <img class="cart-product-image" src="./admin/upload/<?php echo $value['product_img'] ?>" alt="">
-              </td>
-              <td><?php echo $value['name']; ?></td>
-              <td><?php echo "$" . $value['price']; ?></td>
-              <td><?php echo $value['product_qty']; ?></td>
-            </tr>
-            <?php
-          }
-        } else {
-          ?>
+        <thead>
           <tr>
-            <td colspan='4'>No item available in cart</td>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Remove</th>
           </tr>
-          <?php
-        }
-        ?>
+        </thead>
+        <tbody>
+          <?php if (isset($_SESSION['mycart']) && !empty($_SESSION['mycart'])): ?>
+            <?php foreach ($_SESSION['mycart'] as $key => $item): ?>
+              <tr>
+                <td>
+                  <img class="cart-product-image" src="./admin/upload/<?php echo htmlspecialchars($item['product_img']); ?>"
+                    alt="<?php echo htmlspecialchars($item['name']); ?>">
+                </td>
+                <td><?php echo htmlspecialchars($item['name']); ?></td>
+                <td><?php echo "$" . htmlspecialchars($item['price']); ?></td>
+                <td><?php echo htmlspecialchars($item['product_qty']); ?></td>
+                <td>
+                  <form action="manage_cart.php" method="POST">
+                    <input type="hidden" name="product_id_to_remove"
+                      value="<?php echo htmlspecialchars($item['product_id']); ?>">
+                    <button type="submit" name="remove_from_cart" class="btn-remove">Remove</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="4">No items available in cart.</td>
+            </tr>
+          <?php endif; ?>
+        </tbody>
       </table>
     </div>
   </div>
-  </div>
-  <?php
-  if (isset($_SESSION['mycart'])) {
-    ?>
+
+  <?php if (isset($_SESSION['mycart']) && !empty($_SESSION['mycart'])): ?>
     <div class="child-register-btn">
-      <p> <a href="checkout.php" style="color:#FFFFFF">Proceed To CheckOut</a>
-      </p>
+      <form action="checkout.php" method="POST">
+        <button type="submit" name="proceed_to_checkout_action" style="color: #FFFFFF;">
+          Proceed To CheckOut
+        </button>
+      </form>
     </div>
-    <?php
-  }
-  ?>
+  <?php endif; ?>
 </main>
+
 <script src="https://js.stripe.com/v3/"></script>
 <?php require_once './includes/footer.php'; ?>
