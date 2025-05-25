@@ -30,23 +30,40 @@
 .nav-arrow {
     display: block;
     margin: 15px auto 0 auto;
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #666;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    font-size: 18px;
+    color: #6c757d;
     cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 50%;
-    transition: color 0.3s ease;
+    padding: 10px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
     z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-weight: 500;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav-arrow:hover {
     color: #ce5959;
+    background: #fff;
+    border-color: #ce5959;
+    box-shadow: 0 4px 8px rgba(206, 89, 89, 0.1);
+    transform: translateY(-1px);
 }
 
 .nav-arrow:focus {
     outline: none;
+    box-shadow: 0 0 0 3px rgba(206, 89, 89, 0.1);
+}
+
+.nav-arrow:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Hide second container by default */
