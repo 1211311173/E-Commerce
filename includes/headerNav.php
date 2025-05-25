@@ -44,9 +44,10 @@
 	<!--
 		- custom css link
 	-->
-		<link rel="stylesheet" type="text/css" href="./css/style-prefix.css?<?php echo time(); ?>" />
+	<link rel="stylesheet" type="text/css" href="./css/style-prefix.css?<?php echo time(); ?>" />
 	<!-- <link rel="stylesheet" href="./css/style-prefix.css" /> -->
 	<link rel="stylesheet" type="text/css" href="./css/modern-banner-slider.css?<?php echo time(); ?>" />
+	<link rel="stylesheet" type="text/css" href="./css/modern-category-scroller.css?<?php echo time(); ?>" />
 	<link rel="stylesheet" type="text/css" href="./css/view-details.css?<?php echo time(); ?>" />
 	<link rel="stylesheet" type="text/css" href="./css/cart-card-design.css?<?php echo time(); ?>" />
 	<link rel="stylesheet" type="text/css" href="./css/aboutus.css?<?php echo time(); ?>" />

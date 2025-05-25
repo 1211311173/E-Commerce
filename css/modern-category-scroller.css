@@ -1,0 +1,69 @@
+/* Simple Category Horizontal Scroller */
+
+.category-item-container {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 15px;
+  padding: 10px 0;
+  padding-right: 50px; /* Extra space for complete scroll */
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Styling */
+.category-item-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.category-item-container::-webkit-scrollbar-track {
+  background: rgba(206, 89, 89, 0.1);
+  border-radius: 10px;
+}
+
+.category-item-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ce5959 0%, #e87a7a 100%);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.category-item-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #b84848 0%, #ce5959 100%);
+}
+
+/* Prevent category items from shrinking */
+.category-item {
+  flex-shrink: 0;
+  min-width: 280px;
+}
+
+/* Firefox scrollbar support */
+.category-item-container {
+  scrollbar-width: thin;
+  scrollbar-color: #ce5959 rgba(206, 89, 89, 0.1);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .category-item {
+    min-width: 250px;
+  }
+  
+  .category-item-container {
+    gap: 12px;
+    padding-right: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-item {
+    min-width: 220px;
+  }
+  
+  .category-item-container::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .category-item-container {
+    padding-right: 20px;
+  }
+}
