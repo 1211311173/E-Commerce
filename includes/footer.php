@@ -264,9 +264,9 @@
     <script src="./js/notification.js"></script>
     <script src="./js/mobilemenu.js"></script>
     <script src="./js/datamodal.js"></script>
-    <script src="./js/dataaccordion.js"></script>
-    <script src="./js/modern-banner-slider.js"></script>
+    <script src="./js/dataaccordion.js"></script>    <script src="./js/modern-banner-slider.js"></script>
     <script src="./js/expandable-sections.js"></script>
+    <script src="./js/deal-slider.js?v=<?php echo time(); ?>"></script>
     <script src="./ajax/I.js"></script>
     <!--
     - ionicon link
