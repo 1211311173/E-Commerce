@@ -189,9 +189,11 @@ $top_rated_products2 = get_top_rated_products();
       <div class="product-box">
         <!--
             - PRODUCT MINIMAL
-          -->        <div class="product-minimal">
+          -->
+        <div class="product-minimal">
           <div class="product-showcase">
-            <h2 class="title">New Arrivals</h2>            <div class="showcase-wrapper">
+            <h2 class="title">New Arrivals</h2>
+            <div class="showcase-wrapper">
               <!-- new arrival container 1 -->
               <div class="showcase-container" id="new-arrivals-container-1">
                 <!-- get element from table with id less than 4 -->
@@ -253,8 +255,8 @@ $top_rated_products2 = get_top_rated_products();
                     <div class="showcase">
                       <a href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>"
                         class="showcase-img-box">
-                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>" alt="men yarn fleece full-zip jacket"
-                          class="showcase-img" width="70" />
+                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>"
+                          alt="men yarn fleece full-zip jacket" class="showcase-img" width="70" />
                       </a>
 
                       <div class="showcase-content">
@@ -288,12 +290,13 @@ $top_rated_products2 = get_top_rated_products();
                 <!--  -->
               </div>
             </div>
-            
+
             <!-- Navigation Arrow -->
             <button class="nav-arrow next" id="new-arrivals-arrow">›</button>
-          </div>          <!-- Trending Items -->
+          </div> <!-- Trending Items -->
           <div class="product-showcase">
-            <h2 class="title">Trending</h2>            <div class="showcase-wrapper">
+            <h2 class="title">Trending</h2>
+            <div class="showcase-wrapper">
               <!-- get data from trending table in db -->
               <!-- trending container 1 -->
               <div class="showcase-container" id="trending-container-1">
@@ -311,8 +314,8 @@ $top_rated_products2 = get_top_rated_products();
                   <div class="showcase">
                     <a href="./viewdetail.php?id=<?php echo $row1['product_id'] ?>&category=<?php echo $row1['category_id'] ?>"
                       class="showcase-img-box">
-                      <img src="./admin/upload/<?php echo htmlspecialchars($row1['product_img']); ?>" alt="Trending products image"
-                        width="70" class="showcase-img" />
+                      <img src="./admin/upload/<?php echo htmlspecialchars($row1['product_img']); ?>"
+                        alt="Trending products image" width="70" class="showcase-img" />
                     </a>
 
                     <div class="showcase-content">
@@ -356,8 +359,8 @@ $top_rated_products2 = get_top_rated_products();
                     <div class="showcase">
                       <a href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>"
                         class="showcase-img-box">
-                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>" alt="trending product image"
-                          class="showcase-img" width="70" />
+                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>"
+                          alt="trending product image" class="showcase-img" width="70" />
                       </a>
 
                       <div class="showcase-content">
@@ -391,12 +394,14 @@ $top_rated_products2 = get_top_rated_products();
                 ?>
               </div>
             </div>
-            
+
             <!-- Navigation Arrow -->
             <button class="nav-arrow next" id="trending-arrow">›</button>
-          </div>          <div class="product-showcase">
+          </div>
+          <div class="product-showcase">
             <h2 class="title">Top Rated</h2>
-            <!-- Load data from top rated table -->            <div class="showcase-wrapper">
+            <!-- Load data from top rated table -->
+            <div class="showcase-wrapper">
               <!-- top rated container 1 -->
               <div class="showcase-container" id="top-rated-container-1">
                 <!-- get element from table with id less than 4 -->
@@ -442,7 +447,7 @@ $top_rated_products2 = get_top_rated_products();
                 }
                 ?>
               </div>
-              
+
               <!-- top rated container 2 -->
               <div class="showcase-container" id="top-rated-container-2">
                 <!-- get element from table with id greater than 4 -->
@@ -459,8 +464,8 @@ $top_rated_products2 = get_top_rated_products();
                     <div class="showcase">
                       <a href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>"
                         class="showcase-img-box">
-                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>" alt="trending product image"
-                          class="showcase-img" width="70" />
+                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>"
+                          alt="trending product image" class="showcase-img" width="70" />
                       </a>
 
                       <div class="showcase-content">
@@ -494,7 +499,7 @@ $top_rated_products2 = get_top_rated_products();
                 ?>
               </div>
             </div>
-            
+
             <!-- Navigation Arrow -->
             <button class="nav-arrow" id="top-rated-arrow">›</button>
           </div>
