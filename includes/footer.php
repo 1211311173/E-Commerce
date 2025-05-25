@@ -257,9 +257,7 @@
           </p>
         </div>
       </div>
-    </footer>
-
-    <!--
+    </footer>    <!--
     - custom js link
   -->
     <!-- <script src="./assets/js/script.js"></script> -->
@@ -267,6 +265,7 @@
     <script src="./js/mobilemenu.js"></script>
     <script src="./js/datamodal.js"></script>
     <script src="./js/dataaccordion.js"></script>
+    <script src="./js/modern-banner-slider.js"></script>
     <script src="./ajax/I.js"></script>
     <!--
     - ionicon link
