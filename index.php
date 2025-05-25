@@ -189,30 +189,25 @@ $top_rated_products2 = get_top_rated_products();
       <div class="product-box">
         <!--
             - PRODUCT MINIMAL
-          -->
-
-        <div class="product-minimal">
+          -->        <div class="product-minimal">
           <div class="product-showcase">
-            <h2 class="title">New Arrivals</h2>
-
-            <div class="showcase-wrapper has-scrollbar">
+            <h2 class="title">New Arrivals</h2>            <div class="showcase-wrapper">
               <!-- new arrival container 1 -->
-
-              <div class="showcase-container">
+              <div class="showcase-container" id="new-arrivals-container-1">
                 <!-- get element from table with id less than 4 -->
                 <?php
-                $itemID;
-                $counter = 0;
+                $itemID_na;
+                $counter_na1 = 0;
                 while ($row1 = mysqli_fetch_assoc($new_arrivals1)) {
                   // prints 4 items and then break out
-                  if ($counter == 4) {
+                  if ($counter_na1 == 4) {
                     break;
                   }
                   ?>
                   <div class="showcase">
                     <a href="./viewdetail.php?id=<?php echo $row1['product_id'] ?>&category=<?php echo $row1['category_id'] ?>"
                       class="showcase-img-box">
-                      <img src="./admin/upload/<?php echo $row1['product_img']; ?>"
+                      <img src="./admin/upload/<?php echo htmlspecialchars($row1['product_img']); ?>"
                         alt="relaxed short full sleeve t-shirt" width="70" class="showcase-img" />
                     </a>
 
@@ -220,7 +215,7 @@ $top_rated_products2 = get_top_rated_products();
                       <a
                         href="./viewdetail.php?id=<?php echo $row1['product_id'] ?>&category=<?php echo $row1['category_id'] ?>">
                         <h4 class="showcase-title">
-                          <?php echo $row1['product_title']; ?>
+                          <?php echo htmlspecialchars($row1['product_title']); ?>
                         </h4>
                       </a>
 
@@ -236,30 +231,29 @@ $top_rated_products2 = get_top_rated_products();
                     </div>
                   </div>
                   <?php
-                  $itemID = $row1['product_id'];
-                  $counter += 1;
+                  $itemID_na = $row1['product_id'];
+                  $counter_na1 += 1;
                 }
                 ?>
               </div>
               <!--  -->
               <!-- new arrival container 2 -->
-              <div class="showcase-container">
-                <!-- get element from table with id greaer than 4 -->
+              <div class="showcase-container" id="new-arrivals-container-2">
+                <!-- get element from table with id greater than 4 -->
                 <?php
-                // $itemID = 4;
-                $counter = 0;
+                $counter_na2 = 0;
                 while ($row2 = mysqli_fetch_assoc($new_arrivals2)) {
                   // breaks after printing 4 items
-                  if ($counter == 4) {
+                  if ($counter_na2 == 4) {
                     break;
                   }
-                  if ($row2['product_id'] > $itemID) {
+                  if ($row2['product_id'] > $itemID_na) {
 
                     ?>
                     <div class="showcase">
                       <a href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>"
                         class="showcase-img-box">
-                        <img src="./admin/upload/<?php echo $row2['product_img']; ?>" alt="men yarn fleece full-zip jacket"
+                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>" alt="men yarn fleece full-zip jacket"
                           class="showcase-img" width="70" />
                       </a>
 
@@ -267,7 +261,7 @@ $top_rated_products2 = get_top_rated_products();
                         <a
                           href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>">
                           <h4 class="showcase-title">
-                            <?php echo $row2['product_title']; ?>
+                            <?php echo htmlspecialchars($row2['product_title']); ?>
                           </h4>
                         </a>
 
@@ -286,32 +280,30 @@ $top_rated_products2 = get_top_rated_products();
                         </div>
                       </div>
                     </div>
-
                     <?php
-                    $counter += 1;
+                    $counter_na2 += 1;
                   }
                 }
                 ?>
                 <!--  -->
               </div>
             </div>
-          </div>
-
-          <!-- Trending Items -->
+            
+            <!-- Navigation Arrow -->
+            <button class="nav-arrow next" id="new-arrivals-arrow">›</button>
+          </div>          <!-- Trending Items -->
           <div class="product-showcase">
-            <h2 class="title">Trending</h2>
-
-            <div class="showcase-wrapper has-scrollbar">
+            <h2 class="title">Trending</h2>            <div class="showcase-wrapper">
               <!-- get data from trending table in db -->
               <!-- trending container 1 -->
-              <div class="showcase-container">
+              <div class="showcase-container" id="trending-container-1">
                 <!-- get element from table with id less than 4 -->
                 <?php
-                $itemID;
-                $counter = 0;
+                $itemID_tr;
+                $counter_tr1 = 0;
                 while ($row1 = mysqli_fetch_assoc($trending_products1)) {
                   // prints 4 items and then break out
-                  if ($counter == 4) {
+                  if ($counter_tr1 == 4) {
                     break;
                   }
 
@@ -319,7 +311,7 @@ $top_rated_products2 = get_top_rated_products();
                   <div class="showcase">
                     <a href="./viewdetail.php?id=<?php echo $row1['product_id'] ?>&category=<?php echo $row1['category_id'] ?>"
                       class="showcase-img-box">
-                      <img src="./admin/upload/<?php echo $row1['product_img']; ?>" alt="Treding products image"
+                      <img src="./admin/upload/<?php echo htmlspecialchars($row1['product_img']); ?>" alt="Trending products image"
                         width="70" class="showcase-img" />
                     </a>
 
@@ -327,7 +319,7 @@ $top_rated_products2 = get_top_rated_products();
                       <a
                         href="./viewdetail.php?id=<?php echo $row1['product_id'] ?>&category=<?php echo $row1['category_id'] ?>">
                         <h4 class="showcase-title">
-                          <?php echo $row1['product_title']; ?>
+                          <?php echo htmlspecialchars($row1['product_title']); ?>
                         </h4>
                       </a>
 
@@ -343,31 +335,28 @@ $top_rated_products2 = get_top_rated_products();
                     </div>
                   </div>
                   <?php
-                  $itemID = $row1['product_id'];
-                  $counter += 1;
+                  $itemID_tr = $row1['product_id'];
+                  $counter_tr1 += 1;
                 }
                 ?>
-
-
               </div>
               <!-- trending container 2 -->
-              <div class="showcase-container">
-                <!-- get element from table with id greaer than 4 -->
+              <div class="showcase-container" id="trending-container-2">
+                <!-- get element from table with id greater than 4 -->
                 <?php
-                // $itemID = 4;
-                $counter = 0;
+                $counter_tr2 = 0;
                 while ($row2 = mysqli_fetch_assoc($trending_products2)) {
                   // breaks after printing 4 items
-                  if ($counter == 4) {
+                  if ($counter_tr2 == 4) {
                     break;
                   }
-                  if ($row2['product_id'] > $itemID) {
+                  if ($row2['product_id'] > $itemID_tr) {
 
                     ?>
                     <div class="showcase">
                       <a href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>"
                         class="showcase-img-box">
-                        <img src="./admin/upload/<?php echo $row2['product_img']; ?>" alt="trending product image"
+                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>" alt="trending product image"
                           class="showcase-img" width="70" />
                       </a>
 
@@ -375,7 +364,7 @@ $top_rated_products2 = get_top_rated_products();
                         <a
                           href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>">
                           <h4 class="showcase-title">
-                            <?php echo $row2['product_title']; ?>
+                            <?php echo htmlspecialchars($row2['product_title']); ?>
                           </h4>
                         </a>
 
@@ -396,30 +385,27 @@ $top_rated_products2 = get_top_rated_products();
                     </div>
 
                     <?php
-                    $counter += 1;
+                    $counter_tr2 += 1;
                   }
                 }
                 ?>
-
-                <!--  -->
               </div>
-              <!--  -->
             </div>
-          </div>
-
-          <div class="product-showcase">
+            
+            <!-- Navigation Arrow -->
+            <button class="nav-arrow next" id="trending-arrow">›</button>
+          </div>          <div class="product-showcase">
             <h2 class="title">Top Rated</h2>
-            <!-- Load data from top rated table -->
-            <div class="showcase-wrapper has-scrollbar">
+            <!-- Load data from top rated table -->            <div class="showcase-wrapper">
               <!-- top rated container 1 -->
-              <div class="showcase-container">
+              <div class="showcase-container" id="top-rated-container-1">
                 <!-- get element from table with id less than 4 -->
                 <?php
-                $itemID;
-                $counter = 0;
+                $itemID_tr;
+                $counter_tr1 = 0;
                 while ($row1 = mysqli_fetch_assoc($top_rated_products1)) {
                   // prints 4 items and then break out
-                  if ($counter == 4) {
+                  if ($counter_tr1 == 4) {
                     break;
                   }
 
@@ -427,7 +413,7 @@ $top_rated_products2 = get_top_rated_products();
                   <div class="showcase">
                     <a href="./viewdetail.php?id=<?php echo $row1['product_id'] ?>&category=<?php echo $row1['category_id'] ?>"
                       class="showcase-img-box">
-                      <img src="./admin/upload/<?php echo $row1['product_img']; ?>"
+                      <img src="./admin/upload/<?php echo htmlspecialchars($row1['product_img']); ?>"
                         alt="relaxed short full sleeve t-shirt" width="70" class="showcase-img" />
                     </a>
 
@@ -435,7 +421,7 @@ $top_rated_products2 = get_top_rated_products();
                       <a
                         href="./viewdetail.php?id=<?php echo $row1['product_id'] ?>&category=<?php echo $row1['category_id'] ?>">
                         <h4 class="showcase-title">
-                          <?php echo $row1['product_title']; ?>
+                          <?php echo htmlspecialchars($row1['product_title']); ?>
                         </h4>
                       </a>
 
@@ -451,31 +437,29 @@ $top_rated_products2 = get_top_rated_products();
                     </div>
                   </div>
                   <?php
-                  $itemID = $row1['product_id'];
-                  $counter += 1;
+                  $itemID_tr = $row1['product_id'];
+                  $counter_tr1 += 1;
                 }
                 ?>
-
-
               </div>
-              <!-- top rated conatiner 2 -->
-              <div class="showcase-container">
-                <!-- get element from table with id greaer than 4 -->
+              
+              <!-- top rated container 2 -->
+              <div class="showcase-container" id="top-rated-container-2">
+                <!-- get element from table with id greater than 4 -->
                 <?php
-                // $itemID = 4;
-                $counter = 0;
+                $counter_tr2 = 0;
                 while ($row2 = mysqli_fetch_assoc($top_rated_products2)) {
                   // breaks after printing 4 items
-                  if ($counter == 4) {
+                  if ($counter_tr2 == 4) {
                     break;
                   }
-                  if ($row2['product_id'] > $itemID) {
+                  if ($row2['product_id'] > $itemID_tr) {
 
                     ?>
                     <div class="showcase">
                       <a href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>"
                         class="showcase-img-box">
-                        <img src="./admin/upload/<?php echo $row2['product_img']; ?>" alt="trending product image"
+                        <img src="./admin/upload/<?php echo htmlspecialchars($row2['product_img']); ?>" alt="trending product image"
                           class="showcase-img" width="70" />
                       </a>
 
@@ -483,7 +467,7 @@ $top_rated_products2 = get_top_rated_products();
                         <a
                           href="./viewdetail.php?id=<?php echo $row2['product_id'] ?>&category=<?php echo $row2['category_id'] ?>">
                           <h4 class="showcase-title">
-                            <?php echo $row2['product_title']; ?>
+                            <?php echo htmlspecialchars($row2['product_title']); ?>
                           </h4>
                         </a>
 
@@ -504,15 +488,15 @@ $top_rated_products2 = get_top_rated_products();
                     </div>
 
                     <?php
-                    $counter += 1;
+                    $counter_tr2 += 1;
                   }
                 }
                 ?>
-
-                <!--  -->
               </div>
-              <!--  -->
             </div>
+            
+            <!-- Navigation Arrow -->
+            <button class="nav-arrow" id="top-rated-arrow">›</button>
           </div>
         </div>
 

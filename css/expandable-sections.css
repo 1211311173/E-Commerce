@@ -1,0 +1,81 @@
+/* Simple Arrow Navigation Styles */
+
+.product-showcase {
+    position: relative;
+}
+
+.showcase-wrapper {
+    position: relative;
+    overflow: hidden !important;
+    display: block !important;
+    /* Override the horizontal flex layout for sections with arrows */
+}
+
+/* Override horizontal scrolling for sections with arrow navigation */
+.showcase-wrapper:not(.has-scrollbar) {
+    overflow-x: visible !important;
+    scroll-snap-type: none !important;
+    align-items: stretch !important;
+    display: block !important;
+}
+
+.showcase-wrapper:not(.has-scrollbar) .showcase-container {
+    min-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    scroll-snap-align: none !important;
+    display: block !important;
+}
+
+.nav-arrow {
+    display: block;
+    margin: 15px auto 0 auto;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.nav-arrow:hover {
+    color: #ce5959;
+}
+
+.nav-arrow:focus {
+    outline: none;
+}
+
+/* Hide second container by default */
+#new-arrivals-container-2,
+#trending-container-2,
+#top-rated-container-2 {
+    display: none !important;
+}
+
+/* Show first container by default */
+#new-arrivals-container-1,
+#trending-container-1,
+#top-rated-container-1 {
+    display: block !important;
+}
+
+/* Ensure the showcase wrapper doesn't use flex for our arrow navigation sections */
+.product-showcase:has(.nav-arrow) .showcase-wrapper {
+    display: block !important;
+    flex-direction: unset !important;
+    -webkit-box-orient: unset !important;
+    -webkit-box-direction: unset !important;
+    -webkit-flex-direction: unset !important;
+    -ms-flex-direction: unset !important;
+}
+
+/* Force block display for containers in arrow navigation sections */
+.product-showcase:has(.nav-arrow) .showcase-container {
+    display: block !important;
+    min-width: 100% !important;
+    width: 100% !important;
+}
