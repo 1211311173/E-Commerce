@@ -149,81 +149,82 @@
     line-height: 1.5;
 }
 
-/* Empty State */
+/* Empty State - Clean and Simple */
 .empty-orders {
     text-align: center;
-    padding: 60px 20px;
-    background: white;
+    padding: 80px 20px;
+    background: var(--light-gray);
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--border-gray);
-    animation: fadeIn 0.8s ease-out;
+    margin: 40px 0;
+    animation: fadeIn 1s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .empty-orders-icon {
+    font-size: 4rem;
+    color: var(--text-gray);
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .empty-orders-icon ion-icon {
-    font-size: 4rem;
-    color: #ccc;
-    transition: color 0.3s ease;
-}
-
-.empty-orders:hover .empty-orders-icon ion-icon {
-    color: var(--main-maroon);
+    display: block;
+    margin: 0 auto;
 }
 
 .empty-orders-message {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: var(--text-gray);
     margin-bottom: 10px;
     font-weight: 600;
+    text-align: center;
+    width: 100%;
 }
 
 .empty-orders-subtitle {
     color: var(--text-gray);
+    font-size: 1rem;
     margin-bottom: 30px;
-    line-height: 1.6;
+    text-align: center;
+    width: 100%;
 }
 
 .btn-start-shopping {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--main-maroon), var(--deep-maroon));
+    background: var(--main-maroon);
     color: white;
-    padding: 15px 30px;
-    text-decoration: none;
+    padding: 12px 30px;
+    border: none;
     border-radius: 8px;
-    font-weight: 600;
     font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-start-shopping::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
-}
-
-.btn-start-shopping:hover::before {
-    left: 100%;
 }
 
 .btn-start-shopping:hover {
+    background: var(--deep-maroon);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(206, 89, 89, 0.3);
-    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(206, 89, 89, 0.3);
     color: white;
+    text-decoration: none;
 }
 
-/* Login Required State */
+.btn-start-shopping:focus {
+    outline: 2px solid var(--main-maroon);
+    outline-offset: 2px;
+}
+
+/* Login Required State - Clean and Simple */
 .login-required {
     max-width: 500px;
     margin: 0 auto;
@@ -232,44 +233,54 @@
 }
 
 .login-required-content {
-    background: white;
+    background: var(--light-gray);
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     padding: 60px 40px;
-    border: 1px solid var(--border-gray);
-    animation: fadeIn 0.8s ease-out;
+    margin: 40px 0;
+    animation: fadeIn 1s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-required-icon {
+    font-size: 4rem;
+    color: var(--main-maroon);
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .login-required-icon ion-icon {
-    font-size: 4rem;
-    color: var(--main-maroon);
-    transition: transform 0.3s ease;
-}
-
-.login-required-content:hover .login-required-icon ion-icon {
-    transform: scale(1.1);
+    display: block;
+    margin: 0 auto;
 }
 
 .login-required-title {
     color: var(--dark-text);
     margin-bottom: 15px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
+    text-align: center;
+    width: 100%;
 }
 
 .login-required-text {
     color: var(--text-gray);
     margin-bottom: 30px;
-    line-height: 1.6;
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
 }
 
 .btn-login {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--main-maroon), var(--deep-maroon));
+    background: var(--main-maroon);
     color: white;
     padding: 12px 24px;
     text-decoration: none;
@@ -277,34 +288,18 @@
     font-weight: 600;
     margin-right: 15px;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-login::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
-}
-
-.btn-login:hover::before {
-    left: 100%;
+    display: inline-block;
 }
 
 .btn-login:hover {
+    background: var(--deep-maroon);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(206, 89, 89, 0.3);
+    box-shadow: 0 6px 20px rgba(206, 89, 89, 0.3);
     text-decoration: none;
     color: white;
 }
 
 .btn-signup {
-    display: inline-block;
     background: transparent;
     color: var(--main-maroon);
     padding: 12px 24px;
@@ -313,6 +308,7 @@
     border-radius: 8px;
     font-weight: 600;
     transition: all 0.3s ease;
+    display: inline-block;
 }
 
 .btn-signup:hover {
@@ -320,7 +316,7 @@
     color: white;
     text-decoration: none;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(206, 89, 89, 0.3);
+    box-shadow: 0 6px 20px rgba(206, 89, 89, 0.3);
 }
 
 /* Responsive Design */
