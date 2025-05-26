@@ -4,6 +4,23 @@ if (isset($_SESSION['mycart'])) {
   $total_cart_items = count($_SESSION['mycart']);
 }
 
+// Get total order count for logged-in user
+$total_orders = 0;
+if (isset($_SESSION['id'])) {
+  include_once('./includes/config.php');
+  $customer_id = $_SESSION['id'];
+  $order_count_query = "SELECT COUNT(*) as total_orders FROM orders WHERE customer_id = ?";
+  $stmt = $conn->prepare($order_count_query);
+  $stmt->bind_param("i", $customer_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $total_orders = $row['total_orders'];
+  }
+  $stmt->close();
+}
+
 ?>
 <div class="header-top">
   <div class="container">
@@ -79,7 +96,8 @@ if (isset($_SESSION['mycart'])) {
           <ion-icon name="search-outline"></ion-icon>
         </button>
       </form>
-    </div>    <div class="header-user-actions">      <!-- Favourite Counter -->
+    </div>
+    <div class="header-user-actions"> <!-- Favourite Counter -->
       <button class="action-btn" title="Favorites">
         <ion-icon name="heart-outline" title=""></ion-icon>
         <span class="count">0</span>
@@ -93,12 +111,16 @@ if (isset($_SESSION['mycart'])) {
         <span class="count">
           <?php echo $total_cart_items; ?>
         </span>
-      </button>      <!-- Order History Button -->
+      </button>
+        <!-- Order History Button -->
       <?php if (isset($_SESSION['id'])): ?>
         <button class="action-btn" title="Order History">
           <a href="./order-history.php">
             <ion-icon name="receipt-outline" title=""></ion-icon>
           </a>
+          <span class="count">
+            <?php echo $total_orders; ?>
+          </span>
         </button>
       <?php endif; ?>
 

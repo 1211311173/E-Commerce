@@ -281,6 +281,7 @@
 
 <!-- Remove auto-generated titles from header action ion-icons -->
 <script>
+//TODO: MOVE THIS OUT
 document.addEventListener('DOMContentLoaded', function() {
     // Remove title attributes from ion-icons in header user actions
     const headerActionIcons = document.querySelectorAll('.header-user-actions ion-icon');
