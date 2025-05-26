@@ -115,7 +115,7 @@ if (isset($_SESSION['id'])) {
         <!-- Order History Button -->
       <?php if (isset($_SESSION['id'])): ?>
         <button class="action-btn" title="Order History">
-          <a href="./order-history.php">
+          <a href="./order_history.php">
             <ion-icon name="receipt-outline" title=""></ion-icon>
           </a>
           <span class="count">

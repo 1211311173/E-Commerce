@@ -77,7 +77,7 @@ $session_id = isset($_GET['session_id']) ? $_GET['session_id'] : null;
 
             <!-- Action Buttons -->
             <div class="success-actions">
-                <a href="order-history.php" class="btn-primary">
+                <a href="order_history.php" class="btn-primary">
                     <ion-icon name="receipt-outline"></ion-icon>
                     View Order History
                 </a>

@@ -72,7 +72,7 @@
             Please login to view your order history and track your purchases.
           </p>
           <div class="login-buttons">
-            <a href="login.php?redirect=order-history.php" class="btn-login">Login</a>
+            <a href="login.php?redirect=order_history.php" class="btn-login">Login</a>
             <a href="signup.php" class="btn-signup">Sign Up</a>
           </div>
         </div>

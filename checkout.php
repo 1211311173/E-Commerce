@@ -111,7 +111,7 @@ try {
         'payment_method_types' => ['card'],
         'line_items' => $line_items,
         'mode' => 'payment',
-        'success_url' => $DOMAIN . '/success.php?session_id={CHECKOUT_SESSION_ID}',
+        'success_url' => $DOMAIN . '/landing_page.php?session_id={CHECKOUT_SESSION_ID}',
         'cancel_url' => $cancel_page_url,
         'expires_at' => $expires_at_timestamp,
     ]);
