@@ -11,7 +11,6 @@ $_SESSION['customer_name'] = $row8['customer_fname'];
 $_SESSION['customer_email'] = $row8['customer_email'];
 $_SESSION['customer_phone'] = $row8['customer_phone'];
 $_SESSION['customer_address'] = $row8['customer_address'];
-$conn->close();
 ?>
 
 <head>
@@ -334,9 +333,6 @@ if (isset($_POST['save'])) {
   }
 }
 ?>
-
-
-
 
 <!-- Footer====================================================================== -->
 <?php
