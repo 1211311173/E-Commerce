@@ -37,14 +37,10 @@ $session_id = isset($_GET['session_id']) ? $_GET['session_id'] : null;
 <!-- MAIN CONTENT -->
 <main>
     <div class="success-container">
-        <div class="success-card">
-            <!-- Success Icon -->
+        <div class="success-card">            <!-- Success Icon -->
             <div class="success-icon">
                 <div class="checkmark-circle">
-                    <div class="checkmark">
-                        <div class="checkmark-stem"></div>
-                        <div class="checkmark-kick"></div>
-                    </div>
+                    <ion-icon name="checkmark-outline"></ion-icon>
                 </div>
             </div>
 
