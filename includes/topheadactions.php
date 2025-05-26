@@ -79,31 +79,8 @@ if (isset($_SESSION['mycart'])) {
           <ion-icon name="search-outline"></ion-icon>
         </button>
       </form>
-    </div>
+    </div>    <div class="header-user-actions">
 
-    <div class="header-user-actions">
-
-      <!-- Logout button -->
-      <?php if (isset($_SESSION['id'])) { ?>
-
-        <button id="lg-btn" class="action-btn">
-          <a href="logout.php" id="a" role="button">
-            <ion-icon name="log-out-outline"></ion-icon>
-          </a>
-        </button>
-
-        <!-- TODO: This script doesnot execute: Work o this, Directly logout user -->
-        <script src="./js/logout.js"></script>
-
-      <?php } else { ?>
-        <!-- Login Button -->
-        <button class="action-btn">
-          <a href="./login.php" id="a">
-            <ion-icon name="person-outline"></ion-icon>
-          </a>
-        </button>
-
-      <?php } ?>
       <!-- Favourite Counter -->
       <button class="action-btn">
         <ion-icon name="heart-outline"></ion-icon>
@@ -111,19 +88,40 @@ if (isset($_SESSION['mycart'])) {
       </button>
 
       <!-- Cart Button -->
-      <?php if (!(isset($_SESSION['logged-in']))) { ?>
+      <button class="action-btn">
+        <a href="./cart.php">
+          <ion-icon name="bag-handle-outline"></ion-icon>
+        </a>
+        <span class="count">
+          <?php echo $total_cart_items; ?>
+        </span>
+      </button>
 
+      <!-- Order History Button -->
+      <?php if (isset($_SESSION['id'])): ?>
         <button class="action-btn">
-          <a href="./cart.php">
-            <ion-icon name="bag-handle-outline"></ion-icon>
+          <a href="./order-history.php" title="Order History">
+            <ion-icon name="receipt-outline"></ion-icon>
           </a>
-          <span class="count">
-            <?php
-            echo $total_cart_items;
-            ?>
-          </span>
         </button>
+      <?php endif; ?>
 
+      <!-- Login/Logout Button -->
+      <?php if (isset($_SESSION['id'])) { ?>
+        <button id="lg-btn" class="action-btn">
+          <a href="logout.php" id="a" role="button" title="Logout">
+            <ion-icon name="log-out-outline"></ion-icon>
+          </a>
+        </button>
+        <!-- TODO: This script doesnot execute: Work o this, Directly logout user -->
+        <script src="./js/logout.js"></script>
+      <?php } else { ?>
+        <!-- Login Button -->
+        <button class="action-btn">
+          <a href="./login.php" id="a" title="Login">
+            <ion-icon name="person-outline"></ion-icon>
+          </a>
+        </button>
       <?php } ?>
     </div>
   </div>

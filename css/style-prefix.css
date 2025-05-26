@@ -2692,12 +2692,20 @@ footer {
             align-items: center;
     gap: 15px;
   }
-
   .header-user-actions .action-btn {
     position: relative;
     font-size: 35px;
     color: var(--black-shade);
     padding: 5px;
+  }
+
+  .header-user-actions .action-btn a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .header-user-actions .action-btn a:hover {
+    color: inherit;
   }
 
   .header-user-actions .count {
