@@ -279,6 +279,35 @@
 <script src="./js/main.js"></script>
 <script src="./js/modern-category-scroller.js"></script>
 
+<!-- Remove auto-generated titles from header action ion-icons -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Remove title attributes from ion-icons in header user actions
+    const headerActionIcons = document.querySelectorAll('.header-user-actions ion-icon');
+    headerActionIcons.forEach(icon => {
+        icon.removeAttribute('title');
+    });
+    
+    // Also monitor for any dynamically added icons
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                const addedIcons = mutation.target.querySelectorAll('.header-user-actions ion-icon');
+                addedIcons.forEach(icon => {
+                    icon.removeAttribute('title');
+                });
+            }
+        });
+    });
+    
+    // Start observing
+    const headerActions = document.querySelector('.header-user-actions');
+    if (headerActions) {
+        observer.observe(headerActions, { childList: true, subtree: true });
+    }
+});
+</script>
+
 </body>
 
 </html>
