@@ -63,9 +63,24 @@
 
 }
 
+/*-----------------------------------*\
+  #ION-ICON TITLE OVERRIDE
+\*-----------------------------------*/
 
+/* Prevent ion-icons in header actions from showing auto-generated titles */
+.header-user-actions ion-icon {
+  pointer-events: none;
+}
 
+.header-user-actions .action-btn {
+  position: relative;
+}
 
+/* Override any title attribute on ion-icons within header action buttons */
+.header-user-actions ion-icon[title] {
+  /* Remove title attribute effect */
+  pointer-events: none;
+}
 
 /*-----------------------------------*\
   #RESET
@@ -2692,7 +2707,6 @@ footer {
             align-items: center;
     gap: 15px;
   }
-
   .header-user-actions .action-btn {
     position: relative;
     font-size: 35px;
@@ -2700,6 +2714,14 @@ footer {
     padding: 5px;
   }
 
+  .header-user-actions .action-btn a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .header-user-actions .action-btn a:hover {
+    color: inherit;
+  }
   .header-user-actions .count {
     position: absolute;
     top: -2px;

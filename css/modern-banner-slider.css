@@ -1,0 +1,254 @@
+/* Modern Banner Slider Styles */
+
+.modern-banner-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.modern-slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-slide {
+  position: relative;
+  min-width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 5%;
+}
+
+.modern-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 100%);
+  z-index: 1;
+}
+
+.modern-slide-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 500px;
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.modern-slide-subtitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ce5959;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.9;
+}
+
+.modern-slide-title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modern-slide-text {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.modern-slide-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #ce5959 0%, #e87a7a 100%);
+  color: white;
+  padding: 15px 35px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(206, 89, 89, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modern-slide-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(206, 89, 89, 0.4);
+  background: linear-gradient(135deg, #e87a7a 0%, #ce5959 100%);
+}
+
+/* Navigation Controls */
+.modern-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  z-index: 10;
+  opacity: 0.8;
+}
+
+.modern-nav-btn:hover {
+  background: rgba(206, 89, 89, 0.9);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 10px 25px rgba(206, 89, 89, 0.3);
+}
+
+.modern-nav-btn.prev {
+  left: 30px;
+}
+
+.modern-nav-btn.next {
+  right: 30px;
+}
+
+/* Dots Indicator */
+.modern-dots-container {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.modern-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.modern-dot.active {
+  background: #ce5959;
+  border-color: white;
+  transform: scale(1.2);
+}
+
+.modern-dot:hover {
+  background: rgba(206, 89, 89, 0.7);
+  transform: scale(1.1);
+}
+
+/* Animation Keyframes */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modern-banner-container {
+    height: 400px;
+    border-radius: 10px;
+  }
+  
+  .modern-slide-title {
+    font-size: 32px;
+  }
+  
+  .modern-slide-text {
+    font-size: 16px;
+  }
+  
+  .modern-slide-btn {
+    padding: 12px 25px;
+    font-size: 14px;
+  }
+  
+  .modern-nav-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .modern-nav-btn.prev {
+    left: 15px;
+  }
+  
+  .modern-nav-btn.next {
+    right: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-banner-container {
+    height: 350px;
+    margin: 15px 0;
+  }
+  
+  .modern-slide {
+    padding: 0 3%;
+  }
+  
+  .modern-slide-content {
+    max-width: 90%;
+  }
+  
+  .modern-slide-title {
+    font-size: 28px;
+  }
+  
+  .modern-slide-subtitle {
+    font-size: 14px;
+  }
+  
+  .modern-dots-container {
+    bottom: 20px;
+  }
+  
+  .modern-dot {
+    width: 10px;
+    height: 10px;
+  }
+}

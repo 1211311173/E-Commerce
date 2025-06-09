@@ -12,7 +12,7 @@ $conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName, $dbPort);
 
 // Check connection
 if(!$conn){
-    die("Connection failed: ".$conn->connect_error());
+    die("Connection failed: ".$conn->connect_error);
 }
 
 // Set charset to prevent character set confusion attacks
