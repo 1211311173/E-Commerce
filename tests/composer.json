@@ -1,0 +1,13 @@
+{
+    "require": {
+        "php": ">=7.4",
+        "phpunit/phpunit": "^9.5",
+        "php-webdriver/webdriver": "^1.12",
+        "microsoft/edge-selenium-tools": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tests\\": "src/"
+        }
+    }
+}

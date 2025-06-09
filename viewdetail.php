@@ -103,10 +103,10 @@ if ($product_category == "deal_of_day") {
               </div>
               <!-- submit -->
               <div class="buy-and-cart-btn">
-                <button type="submit" name="add_to_cart" class="btn_product_cart">
+                <button type="submit" name="add_to_cart" id="add-to-cart-btn" class="btn_product_cart">
                   Add to Cart
                 </button>
-                <button type="submit" formaction="checkout.php" name="buy_now_action" class="btn_but_product">Buy</button>
+                <button type="submit" formaction="checkout.php" name="buy_now_action" id="buy-now-btn" class="btn_but_product">Buy</button>
               </div>
             </div>
           </div>

@@ -120,11 +120,11 @@
             <!-- Cart Button -->
 	  <?php if(!(isset($_SESSION['logged-in']))){?>
             
-            <button class="action-btn">
+            <button class="action-btn" id="cart-button">
               <a href="./cart.php" >
                 <ion-icon name="bag-handle-outline"></ion-icon>
               </a>
-              <span class="count"> 
+              <span class="count" id="cart-count"> 
               <?php
                 echo $total_cart_items ;
               ?>

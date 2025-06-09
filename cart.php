@@ -61,7 +61,7 @@
   <?php if (isset($_SESSION['mycart']) && !empty($_SESSION['mycart'])): ?>
     <div class="child-register-btn">
       <form action="checkout.php" method="POST">
-        <button type="submit" name="proceed_to_checkout_action" style="color: #FFFFFF;">
+        <button type="submit" name="proceed_to_checkout_action" id="proceed-to-checkout-btn" style="color: #FFFFFF;">
           Proceed To CheckOut
         </button>
       </form>
