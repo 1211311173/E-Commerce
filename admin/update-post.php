@@ -178,10 +178,6 @@
     $result = $secureDB->update($sql1, [$title, $category, $subcategory, $price, $discount, $description, $image, $noofitem, $product_id], 'sssddssii');
 
     if ($result) {
-        // Log product update
-        if (isset($_SESSION['id'])) {
-            logProductUpdate($_SESSION['id'], $product_id, $title);
-        }
         header("Location:post.php?succesfullyUpdated");
     } else {
         header("Location:update-post.php?id={$product_id}&error=update_failed");
