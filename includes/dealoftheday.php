@@ -11,6 +11,10 @@ $deals_of_the_day = get_deal_of_day();
       <!-- display data from db -->
       <?php
       while ($row = mysqli_fetch_assoc($deals_of_the_day)) {
+        $sold = (int)$row['sold_deal'];
+        $available = (int)$row['available_deal'];
+        $total = $sold + $available;
+        $percent = $total > 0 ? ($sold / $total) * 100 : 0;
         ?>
 
         <div class="deal-slide">
@@ -41,9 +45,9 @@ $deals_of_the_day = get_deal_of_day();
                 </p>
 
                 <div class="price-box">
-                  <p class="price">$ <?php echo $row['deal_net_price'] ?> </p>
+                  <p class="price">$ <?php echo $row['deal_discounted_price'] ?> </p>
 
-                  <del>$<?php echo $row['deal_discounted_price'] ?></del>
+                  <del>$<?php echo  $row['deal_net_price']?></del>
                 </div>
 
                 <button class="add-cart-btn">Premium</button>
@@ -55,7 +59,7 @@ $deals_of_the_day = get_deal_of_day();
                   </div>
 
                   <div class="showcase-status-bar">
-                    <div class="progress-bar" style="width: <?php echo ($row['sold_deal'] / ($row['sold_deal'] + $row['available_deal'])) * 100 ?>%"></div>
+                    <div class="progress-bar" style="width: <?php echo $percent; ?>%"></div>
                   </div>
                 </div>
 
