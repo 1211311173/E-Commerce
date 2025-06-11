@@ -1,27 +1,32 @@
-'use strict';
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
+  // mobile menu variables
+  const mobileMenuOpenBtnElements = document.querySelectorAll('[data-mobile-menu-open-btn]');
+  const mobileMenuElements = document.querySelectorAll('[data-mobile-menu]');
+  const mobileMenuCloseBtnElements = document.querySelectorAll('[data-mobile-menu-close-btn]');
+  const overlayElement = document.querySelector('[data-overlay]');
 
-// mobile menu variables
-const mobileMenuOpenBtn = document.querySelectorAll('[data-mobile-menu-open-btn]');
-const mobileMenu = document.querySelectorAll('[data-mobile-menu]');
-const mobileMenuCloseBtn = document.querySelectorAll('[data-mobile-menu-close-btn]');
-const overlay = document.querySelector('[data-overlay]');
+  if (mobileMenuOpenBtnElements.length > 0 &&
+    mobileMenuElements.length > 0 &&
+    mobileMenuCloseBtnElements.length > 0 &&
+    overlayElement) {
 
-for (let i = 0; i < mobileMenuOpenBtn.length; i++) {
+    for (let i = 0; i < mobileMenuOpenBtnElements.length; i++) {
+      // mobile menu function
+      const mobileMenuCloseFunc = function () {
+        mobileMenuElements[i].classList.remove('active');
+        overlayElement.classList.remove('active');
+      }
 
-  // mobile menu function
-  const mobileMenuCloseFunc = function () {
-    mobileMenu[i].classList.remove('active');
-    overlay.classList.remove('active');
+      mobileMenuOpenBtnElements[i].addEventListener('click', function () {
+        mobileMenuElements[i].classList.add('active');
+        overlayElement.classList.add('active');
+      });
+
+      mobileMenuCloseBtnElements[i].addEventListener('click', mobileMenuCloseFunc);
+      overlayElement.addEventListener('click', mobileMenuCloseFunc);
+    }
   }
-
-  mobileMenuOpenBtn[i].addEventListener('click', function () {
-    mobileMenu[i].classList.add('active');
-    overlay.classList.add('active');
-  });
-
-  mobileMenuCloseBtn[i].addEventListener('click', mobileMenuCloseFunc);
-  overlay.addEventListener('click', mobileMenuCloseFunc);
-
-}
+});
 

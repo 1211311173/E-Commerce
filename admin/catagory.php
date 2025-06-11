@@ -35,22 +35,15 @@ for($i=0; $i<sizeof($catagory_list); $i++){
         continue; // Skip invalid categories
     }
 
-    // Use prepared statement to prevent SQL injection
-    $sql = "SELECT * FROM products WHERE product_catag = ?";
-    $result = $secureDB->select($sql, [$safe_category], 's');
-    $total_post = $result ? $result->num_rows : 0;
-
-// output data of each row
-while($row = $result->fetch_assoc()) {
+    // Get product count for this category
+    $product_count = get_product_count_by_category($safe_category);
 ?>
 <tr>
       <th scope="row"><?php echo $sn ?></th>
-      <td><?php echo $row["product_catag"] ?></td>
-      <td><?php echo $total_post?></td>
+      <td><?php echo $safe_category ?></td>
+      <td><?php echo $product_count ?></td>
 </tr>
-   <?php break; ?>
-<?php } }//loop end
-?>
+<?php } //loop end ?>
 
   </tbody>
 </table>

@@ -1,16 +1,24 @@
-'use strict';
+document.addEventListener('DOMContentLoaded', function () {
+    'use strict';
 
-// modal variables
-const modal = document.querySelector('[data-modal]');
-const modalCloseBtn = document.querySelector('[data-modal-close]');
-const modalCloseOverlay = document.querySelector('[data-modal-overlay]');
+    // modal variables
+    const modalElement = document.querySelector('[data-modal]');
+    const modalCloseBtnElement = document.querySelector('[data-modal-close]');
+    const modalCloseOverlayElement = document.querySelector('[data-modal-overlay]');
 
-// modal function
-const modalCloseFunc = function () { modal.classList.add('closed') }
+    // modal function
+    const modalCloseFunc = function () {
+        if (modalElement) modalElement.classList.add('closed');
+    }
 
-// modal eventListener
-// modalCloseOverlay.addEventListener('click', modalCloseFunc);
-modalCloseBtn.addEventListener('click', modalCloseFunc);
+    // modal eventListener
+    if (modalCloseBtnElement) {
+        modalCloseBtnElement.addEventListener('click', modalCloseFunc);
+    }
+    if (modalCloseOverlayElement) {
+        modalCloseOverlayElement.addEventListener('click', modalCloseFunc);
+    }
+});
 
 
 

@@ -42,23 +42,34 @@ $top_rated_products2 = get_top_rated_products();
     - NOTIFICATION TOAST
   -->
 
+<?php
+$recent_orders = get_recent_orders();
+if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
+    $order = mysqli_fetch_assoc($recent_orders);
+    $order_time = strtotime($order['order_date']);
+    $time_diff = time() - $order_time;
+    $minutes = floor($time_diff / 60);
+?>
 <div class="notification-toast" data-toast>
   <button class="toast-close-btn" data-toast-close>
     <ion-icon name="close-outline"></ion-icon>
   </button>
 
   <div class="toast-banner">
-    <img src="./admin/upload/watch-2.jpg" alt="Smart Watch" width="80" height="70" />
+    <img src="./admin/upload/<?php echo htmlspecialchars($order['product_img']); ?>" alt="<?php echo htmlspecialchars($order['product_title']); ?>" width="80" height="70" />
   </div>
 
   <div class="toast-detail">
-    <p class="toast-message">Someone in new just bought</p>
+    <p class="toast-message"><?php echo htmlspecialchars($order['customer_name']); ?> just bought</p>
 
-    <p class="toast-title">Smart Watch</p>
+    <p class="toast-title"><?php echo htmlspecialchars($order['product_title']); ?></p>
 
-    <p class="toast-meta"><time datetime="PT2M">2 Minutes</time> ago</p>
+    <p class="toast-meta">
+      <time datetime="PT<?php echo $minutes; ?>M"><?php echo $minutes; ?> Minutes</time> ago
+    </p>
   </div>
 </div>
+<?php } ?>
 
 
 <!--
@@ -109,7 +120,7 @@ $top_rated_products2 = get_top_rated_products();
                   Starting at <strong>$<?php echo $row['banner_items_price']; ?>.00</strong>
                 </p>
 
-                <a href="#" class="modern-slide-btn">Shop now</a>
+                <a href="./products.php" class="modern-slide-btn">Shop now</a>
               </div>
             </div>
             <?php
@@ -140,9 +151,8 @@ $top_rated_products2 = get_top_rated_products();
         <!--  -->
         <?php
         while ($row = mysqli_fetch_assoc($catgeory_bar_products)) {
-          ?>
-
-
+          $product_count = get_product_count_by_category($row['category_title']);
+        ?>
           <div class="category-item">
             <div class="category-img-box">
               <img src="./images/icons/<?php echo $row['category_img'] ?>" alt="category bar img" width="30" />
@@ -152,7 +162,7 @@ $top_rated_products2 = get_top_rated_products();
               <div class="category-content-flex">
                 <h3 class="category-item-title"><?php echo $row['category_title'] ?></h3>
 
-                <p class="category-item-amount">(<?php echo $row['category_quantity'] ?>)</p>
+                <p class="category-item-amount">(<?php echo $product_count ?>)</p>
               </div>
 
               <!-- updated it. set to form and will send data to search page -->

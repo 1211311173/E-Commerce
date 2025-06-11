@@ -51,35 +51,35 @@ $deals_of_the_day = get_deal_of_day();
                 <div class="showcase-status">
                   <div class="wrapper">
                     <p>already sold: <b><?php echo $row['sold_deal'] ?></b></p>
-
                     <p>available: <b><?php echo $row['available_deal'] ?></b></p>
                   </div>
 
-                  <div class="showcase-status-bar"></div>
+                  <div class="showcase-status-bar">
+                    <div class="progress-bar" style="width: <?php echo ($row['sold_deal'] / ($row['sold_deal'] + $row['available_deal'])) * 100 ?>%"></div>
+                  </div>
                 </div>
 
                 <div class="countdown-box">
                   <p class="countdown-desc">Hurry Up! Offer ends in:</p>
 
-                  <div class="countdown">
+                  <div class="countdown" data-end-time="<?php echo $row['deal_end_time']; ?>">
                     <div class="countdown-content">
-                      <p class="display-number">360</p>
-
+                      <p class="display-number days">00</p>
                       <p class="display-text">Days</p>
                     </div>
 
                     <div class="countdown-content">
-                      <p class="display-number">24</p>
+                      <p class="display-number hours">00</p>
                       <p class="display-text">Hours</p>
                     </div>
 
                     <div class="countdown-content">
-                      <p class="display-number">59</p>
+                      <p class="display-number minutes">00</p>
                       <p class="display-text">Min</p>
                     </div>
 
                     <div class="countdown-content">
-                      <p class="display-number">00</p>
+                      <p class="display-number seconds">00</p>
                       <p class="display-text">Sec</p>
                     </div>
                   </div>

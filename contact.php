@@ -45,7 +45,7 @@
           <!-- MAIL -->
           <div class="contact-card-container mail">
             <div class="contact-icon">
-              <a href="#">
+              <a href="mailto:<?php echo($site_info_email) ?>">
                 <ion-icon class="contact-icons mail-icon" name="mail-outline"></ion-icon>
               </a>
             </div>
@@ -63,7 +63,7 @@
           <!-- Whatsapp -->
           <div class="contact-card-container whatsapp">
             <div class="contact-icon">
-              <a href="#">
+              <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $site_contact_num) ?>" target="_blank">
                 <ion-icon class="contact-icons whatsapp-icon" name="logo-whatsapp"></ion-icon>
               </a>
             </div>
@@ -72,7 +72,7 @@
                 <h2>Whatsapp</h2>
               </contact-title>
               <p>
-                <a href="#"><?php echo($site_contact_num) ?></a>
+                <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $site_contact_num) ?>" target="_blank"><?php echo($site_contact_num) ?></a>
               </p>
             </div>
           </div>
@@ -81,7 +81,7 @@
           <!-- Location -->
           <div class="contact-card-container location">
             <div class="contact-icon">
-              <a href="#">
+              <a href="https://maps.google.com/?q=<?php echo urlencode($site_address) ?>" target="_blank">
                 <ion-icon class="contact-icons location-icon" name="location-outline"></ion-icon>
               </a>
             </div>
@@ -90,7 +90,7 @@
                 <h2>Location</h2>
               </contact-title>
               <p>
-              <?php echo($site_address) ?>
+                <a href="https://maps.google.com/?q=<?php echo urlencode($site_address) ?>" target="_blank"><?php echo($site_address) ?></a>
               </p>
             </div>
           </div>

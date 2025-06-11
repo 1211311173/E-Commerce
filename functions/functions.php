@@ -179,4 +179,50 @@
         $query = "SELECT * FROM products WHERE products.product_catag = ? AND products.status = 1";
         return $secureDB->select($query, [$safe_category], 's');
     }
+
+    // get recent orders for notification toast
+    function get_recent_orders() {
+        global $conn;
+        $query = "SELECT o.order_id, o.order_date, oi.product_id, p.product_title, p.product_img, c.customer_fname 
+                  FROM orders o 
+                  JOIN order_items oi ON o.order_id = oi.order_id 
+                  JOIN products p ON oi.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE o.order_status = 'confirmed' 
+                  ORDER BY o.order_date DESC 
+                  LIMIT 5";
+        
+        return mysqli_query($conn, $query);
+    }
+
+    // get product count by category
+    function get_product_count_by_category($category) {
+        global $secureDB;
+        
+        // Validate and sanitize category
+        $safe_category = InputValidator::sanitizeString($category, 50);
+        if (empty($safe_category)) {
+            return 0;
+        }
+        
+        // First check if it's a subcategory (case-insensitive)
+        $query = "SELECT COUNT(*) as count FROM products WHERE LOWER(subcategory) = LOWER(?) AND status = 1";
+        $result = $secureDB->select($query, [$safe_category], 's');
+        
+        if ($result && $row = $result->fetch_assoc()) {
+            if ($row['count'] > 0) {
+                return $row['count'];
+            }
+        }
+        
+        // If no results in subcategory, check if it's a broad category (case-insensitive)
+        $query = "SELECT COUNT(*) as count FROM products WHERE LOWER(product_catag) = LOWER(?) AND status = 1";
+        $result = $secureDB->select($query, [$safe_category], 's');
+        
+        if ($result && $row = $result->fetch_assoc()) {
+            return $row['count'];
+        }
+        
+        return 0;
+    }
 ?>

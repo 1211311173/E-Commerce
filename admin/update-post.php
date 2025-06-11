@@ -161,6 +161,7 @@
     // Validate and sanitize input data
     $title = InputValidator::sanitizeString($_POST['title'], 255);
     $category = InputValidator::sanitizeString($_POST['catag'], 50);
+    $subcategory = InputValidator::sanitizeString($_POST['subcategory'], 50);
     $price = InputValidator::validateFloat($_POST['price'], 0);
     $discount = InputValidator::validateFloat($_POST['discount'], 0);
     $description = InputValidator::sanitizeString($_POST['desc'], 1000);
@@ -173,8 +174,8 @@
     }
 
     // Use prepared statement to prevent SQL injection
-    $sql1 = "UPDATE products SET product_title = ?, product_catag = ?, product_price = ?, discounted_price = ?, product_desc = ?, product_img = ?, product_left = ? WHERE product_id = ?";
-    $result = $secureDB->update($sql1, [$title, $category, $price, $discount, $description, $image, $noofitem, $product_id], 'ssddssii');
+    $sql1 = "UPDATE products SET product_title = ?, product_catag = ?, subcategory = ?, product_price = ?, discounted_price = ?, product_desc = ?, product_img = ?, product_left = ? WHERE product_id = ?";
+    $result = $secureDB->update($sql1, [$title, $category, $subcategory, $price, $discount, $description, $image, $noofitem, $product_id], 'sssddssii');
 
     if ($result) {
         header("Location:post.php?succesfullyUpdated");

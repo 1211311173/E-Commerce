@@ -9,19 +9,19 @@ class DealSlider {
     this.prevBtn = container.querySelector('.deal-nav-btn.prev');
     this.nextBtn = container.querySelector('.deal-nav-btn.next');
     this.dotsContainer = container.querySelector('.deal-dots-container');
-    
+
     this.currentSlide = 0;
     this.totalSlides = this.slides.length;
     this.autoPlayInterval = null;
     this.autoPlayDuration = 8000; // Longer duration for deals
     this.isTransitioning = false;
-    
+
     this.init();
   }
-  
+
   init() {
     if (this.totalSlides === 0) return;
-    
+
     this.createDots();
     this.bindEvents();
     this.startAutoPlay();
@@ -30,24 +30,24 @@ class DealSlider {
 
   createDots() {
     if (!this.dotsContainer) return;
-    
+
     this.dotsContainer.innerHTML = '';
-    
+
     for (let i = 0; i < this.totalSlides; i++) {
       const dot = document.createElement('div');
       dot.className = 'deal-dot';
       if (i === 0) dot.classList.add('active');
-      
+
       dot.addEventListener('click', () => {
         if (!this.isTransitioning) {
           this.goToSlide(i);
         }
       });
-      
+
       this.dotsContainer.appendChild(dot);
     }
   }
-  
+
   bindEvents() {
     // Navigation buttons
     if (this.prevBtn) {
@@ -58,7 +58,7 @@ class DealSlider {
         }
       });
     }
-    
+
     if (this.nextBtn) {
       this.nextBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -67,7 +67,7 @@ class DealSlider {
         }
       });
     }
-    
+
     // Keyboard navigation
     this.container.addEventListener('keydown', (e) => {
       if (!this.isTransitioning) {
@@ -80,7 +80,7 @@ class DealSlider {
         }
       }
     });
-    
+
     // Make container focusable for keyboard events
     this.container.setAttribute('tabindex', '0');
 
@@ -92,7 +92,7 @@ class DealSlider {
         this.pauseAutoPlay();
       }
     });
-    
+
     this.container.addEventListener('mouseleave', (e) => {
       if (!e.relatedTarget || !this.container.contains(e.relatedTarget)) {
         clearTimeout(hoverTimeout);
@@ -101,32 +101,32 @@ class DealSlider {
         }, 100);
       }
     });
-    
+
     // Touch/swipe support
     this.addTouchSupport();
   }
-  
+
   addTouchSupport() {
     let startX = 0;
     let isDragging = false;
-    
+
     this.container.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
       isDragging = true;
       this.pauseAutoPlay();
     });
-    
+
     this.container.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
       e.preventDefault();
-    });
-    
+    }, { passive: true });
+
     this.container.addEventListener('touchend', (e) => {
       if (!isDragging) return;
-      
+
       const endX = e.changedTouches[0].clientX;
       const diffX = startX - endX;
-      
+
       if (Math.abs(diffX) > 50) { // Minimum swipe distance
         if (diffX > 0) {
           this.nextSlide();
@@ -134,45 +134,45 @@ class DealSlider {
           this.prevSlide();
         }
       }
-      
+
       isDragging = false;
       this.startAutoPlay();
     });
   }
-  
+
   goToSlide(index) {
     if (index === this.currentSlide || this.isTransitioning) return;
-    
+
     this.isTransitioning = true;
     this.currentSlide = index;
     this.updateSlider();
-    
+
     // Reset transition flag after animation
     setTimeout(() => {
       this.isTransitioning = false;
     }, 600);
-    
+
     // Restart autoplay after manual navigation
     this.startAutoPlay();
   }
-  
+
   nextSlide() {
     const nextIndex = (this.currentSlide + 1) % this.totalSlides;
     this.goToSlide(nextIndex);
   }
-  
+
   prevSlide() {
     const prevIndex = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
     this.goToSlide(prevIndex);
   }
-  
+
   updateSlider() {
     if (!this.wrapper) return;
-    
+
     // Update slider position
     const translateX = -this.currentSlide * 100;
     this.wrapper.style.transform = `translateX(${translateX}%)`;
-    
+
     // Update dots
     const dots = this.dotsContainer?.querySelectorAll('.deal-dot');
     if (dots) {
@@ -181,31 +181,31 @@ class DealSlider {
       });
     }
   }
-  
+
   startAutoPlay() {
     this.pauseAutoPlay(); // Clear any existing interval
-    
+
     this.autoPlayInterval = setInterval(() => {
       this.nextSlide();
     }, this.autoPlayDuration);
   }
-  
+
   pauseAutoPlay() {
     if (this.autoPlayInterval) {
       clearInterval(this.autoPlayInterval);
       this.autoPlayInterval = null;
     }
   }
-  
+
   // Public methods for external control
   pause() {
     this.pauseAutoPlay();
   }
-  
+
   play() {
     this.startAutoPlay();
   }
-  
+
   destroy() {
     this.pauseAutoPlay();
     // Remove event listeners if needed
@@ -222,7 +222,7 @@ if (document.readyState === 'loading') {
 
 function initializeDealSliders() {
   const dealContainers = document.querySelectorAll('.deal-slider-container');
-  
+
   dealContainers.forEach(container => {
     // Avoid double initialization
     if (!container.dataset.dealSliderInitialized) {

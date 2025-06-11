@@ -55,29 +55,21 @@ $bags = get_bags_category();
             <?php
             if ($row['name'] == "Clothes" || $row['name'] == "clothes") {
               while ($clothrow = mysqli_fetch_assoc($clothes)) {
-
+                // Map the category name to match database subcategories
+                $category_name = $clothrow['cloth_category_name'];
+                $product_count = get_product_count_by_category($category_name);
             ?>
-                <!--  -->
                 <li class="sidebar-submenu-category">
-            <!-- updated it. set to form and will send data to search page -->
-                  
                   <form class="search-form" method="post" action="./search.php">
-                    <input type="hidden" name="search" value="<?php echo $clothrow['cloth_category_name'] ?>" />
+                    <input type="hidden" name="search" value="<?php echo $category_name ?>" />
                         <button type="submit" name="submit" class="sidebar-submenu-title">
-
                           <p class="product-name">
-                            <?php echo $clothrow['cloth_category_name'] ?>
+                            <?php echo $category_name ?> (<?php echo $product_count ?>)
                           </p>
-
                         </button>
                   </form>    
                 </li>
-
-
-
-
             <?php
-
               }
             }
             ?>
@@ -85,25 +77,21 @@ $bags = get_bags_category();
             <?php
             if ($row['name'] == "Footwear" || $row['name'] == "footwear") {
               while ($footwearrow = mysqli_fetch_assoc($footwears)) {
-
-
+                // Map the category name to match database subcategories
+                $category_name = $footwearrow['footwear_category_name'];
+                $product_count = get_product_count_by_category($category_name);
             ?>
-                <!--  -->
                 <li class="sidebar-submenu-category">
                   <form class="search-form" method="post" action="./search.php">
-                    <input type="hidden" name="search" value="<?php echo $footwearrow['footwear_category_name'] ?>" />
+                    <input type="hidden" name="search" value="<?php echo $category_name ?>" />
                         <button type="submit" name="submit" class="sidebar-submenu-title">
-
                           <p class="product-name">
-                            <?php echo $footwearrow['footwear_category_name'] ?>
+                            <?php echo $category_name ?> (<?php echo $product_count ?>)
                           </p>
-
                         </button>
                   </form>    
                 </li>
-
             <?php
-
               }
             }
             ?>
@@ -112,25 +100,21 @@ $bags = get_bags_category();
             <?php
             if ($row['name'] == "Jewelry" || $row['name'] == "jewelry") {
               while ($jewelryrow = mysqli_fetch_assoc($jewelries)) {
-
-
+                // Map the category name to match database subcategories
+                $category_name = $jewelryrow['Jewelry_category_name'];
+                $product_count = get_product_count_by_category($category_name);
             ?>
-                <!--  -->
                 <li class="sidebar-submenu-category">
                   <form class="search-form" method="post" action="./search.php">
-                    <input type="hidden" name="search" value="<?php echo $jewelryrow['Jewelry_category_name'] ?>" />
+                    <input type="hidden" name="search" value="<?php echo $category_name ?>" />
                         <button type="submit" name="submit" class="sidebar-submenu-title">
-
                           <p class="product-name">
-                            <?php echo $jewelryrow['Jewelry_category_name'] ?>
+                            <?php echo $category_name ?> (<?php echo $product_count ?>)
                           </p>
-
                         </button>
                   </form>                      
                 </li>
-
             <?php
-
               }
             }
             ?>
@@ -139,25 +123,21 @@ $bags = get_bags_category();
             <?php
             if ($row['name'] == "Perfume" || $row['name'] == "perfume") {
               while ($perfumesrow = mysqli_fetch_assoc($perfumes)) {
-
-
+                // Map the category name to match database subcategories
+                $category_name = $perfumesrow['perfume_category_name'];
+                $product_count = get_product_count_by_category($category_name);
             ?>
-                <!--  -->
                 <li class="sidebar-submenu-category">
                   <form class="search-form" method="post" action="./search.php">
-                    <input type="hidden" name="search" value="<?php echo $perfumesrow['perfume_category_name'] ?>" />
+                    <input type="hidden" name="search" value="<?php echo $category_name ?>" />
                         <button type="submit" name="submit" class="sidebar-submenu-title">
-
                           <p class="product-name">
-                            <?php echo $perfumesrow['perfume_category_name'] ?>
+                            <?php echo $category_name ?> (<?php echo $product_count ?>)
                           </p>
-
                         </button>
                   </form>                  
                 </li>
-
             <?php
-
               }
             }
             ?>
@@ -167,25 +147,21 @@ $bags = get_bags_category();
             <?php
             if ($row['name'] == "Cosmetics" || $row['name'] == "cosmetics") {
               while ($cosmeticsrow = mysqli_fetch_assoc($cosmetics)) {
-
-
+                // Map the category name to match database subcategories
+                $category_name = $cosmeticsrow['cosmetics_category_name'];
+                $product_count = get_product_count_by_category($category_name);
             ?>
-                <!--  -->
                 <li class="sidebar-submenu-category">
                   <form class="search-form" method="post" action="./search.php">
-                    <input type="hidden" name="search" value="<?php echo $cosmeticsrow['cosmetics_category_name'] ?>" />
+                    <input type="hidden" name="search" value="<?php echo $category_name ?>" />
                         <button type="submit" name="submit" class="sidebar-submenu-title">
-
                           <p class="product-name">
-                            <?php echo $cosmeticsrow['cosmetics_category_name'] ?>
+                            <?php echo $category_name ?> (<?php echo $product_count ?>)
                           </p>
-
                         </button>
                   </form>                  
                 </li>
-
             <?php
-
               }
             }
             ?>
@@ -195,25 +171,21 @@ $bags = get_bags_category();
             <?php
             if ($row['name'] == "Glasses" || $row['name'] == "glasses") {
               while ($glassesrow = mysqli_fetch_assoc($glasses)) {
-
-
+                // Map the category name to match database subcategories
+                $category_name = $glassesrow['glasses_category_name'];
+                $product_count = get_product_count_by_category($category_name);
             ?>
-                <!--  -->
                 <li class="sidebar-submenu-category">
                   <form class="search-form" method="post" action="./search.php">
-                    <input type="hidden" name="search" value="<?php echo $glassesrow['glasses_category_name'] ?>" />
+                    <input type="hidden" name="search" value="<?php echo $category_name ?>" />
                         <button type="submit" name="submit" class="sidebar-submenu-title">
-
                           <p class="product-name">
-                            <?php echo $glassesrow['glasses_category_name'] ?>
+                            <?php echo $category_name ?> (<?php echo $product_count ?>)
                           </p>
-
                         </button>
                   </form>                  
                 </li>
-
             <?php
-
               }
             }
             ?>
@@ -223,26 +195,21 @@ $bags = get_bags_category();
             <?php
             if ($row['name'] == "Bags" || $row['name'] == "bags") {
               while ($bagsrow = mysqli_fetch_assoc($bags)) {
-
-
+                // Map the category name to match database subcategories
+                $category_name = $bagsrow['bags_category_name'];
+                $product_count = get_product_count_by_category($category_name);
             ?>
-                <!--  -->
                 <li class="sidebar-submenu-category">
-
                   <form class="search-form" method="post" action="./search.php">
-                    <input type="hidden" name="search" value="<?php echo $bagsrow['bags_category_name'] ?>" />
+                    <input type="hidden" name="search" value="<?php echo $category_name ?>" />
                         <button type="submit" name="submit" class="sidebar-submenu-title">
-
                           <p class="product-name">
-                            <?php echo $bagsrow['bags_category_name'] ?>
+                            <?php echo $category_name ?> (<?php echo $product_count ?>)
                           </p>
-
                         </button>
                   </form>                  
                 </li>
-
             <?php
-
               }
             }
             ?>

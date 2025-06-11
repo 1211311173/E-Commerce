@@ -38,6 +38,7 @@ if(isset($_FILES['prod-img'])){
 
     // Validate and sanitize input data
     $category = InputValidator::sanitizeString($_POST['prod-category'], 50);
+    $subcategory = InputValidator::sanitizeString($_POST['prod-subcategory'], 50);
     $title = InputValidator::sanitizeString($_POST['prod-title'], 255);
     $price = InputValidator::validateFloat($_POST['prod-price'], 0);
     $discount = InputValidator::validateFloat($_POST['prod-discount'], 0);
@@ -50,8 +51,8 @@ if(isset($_FILES['prod-img'])){
     }
 
     // Use prepared statement to prevent SQL injection
-    $sql = "INSERT INTO products (product_catag, product_title, product_price, discounted_price, product_desc, product_date, product_img, product_left, product_author) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $result = $secureDB->insert($sql, [$category, $title, $price, $discount, $description, $today_date, $file_name, $noofitem, $author], 'ssddsssss');
+    $sql = "INSERT INTO products (product_catag, subcategory, product_title, product_price, discounted_price, product_desc, product_date, product_img, product_left, product_author) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $result = $secureDB->insert($sql, [$category, $subcategory, $title, $price, $discount, $description, $today_date, $file_name, $noofitem, $author], 'sssddsssss');
 
     if ($result) {
         header("location:post.php?success");

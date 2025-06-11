@@ -52,9 +52,14 @@ if ($product_category == "deal_of_day") {
           <!-- getting image from here with magnify functionality -->
           <?php include_once './product.php'; ?>
           <div class="product_detail_box">
-            <h3 class="product-detail-title">
-              <?php echo strtoupper($row['product_title']) ?>
-            </h3>
+            <div class="product-title-container">
+              <h3 class="product-detail-title">
+                <?php echo strtoupper($row['product_title']) ?>
+              </h3>
+              <button class="action-btn heart-icon" data-product-id="<?php echo $row['product_id']; ?>">
+                <ion-icon name="heart-outline"></ion-icon>
+              </button>
+            </div>
             <div class="prouduct_information">
               <div class="product_description">
                 <div class="product_title"><strong>Name:</strong></div>
@@ -117,5 +122,6 @@ if ($product_category == "deal_of_day") {
       </form>
     </div>
     <script src="js/viewdetail.js"></script>
+    <script src="js/favorites.js"></script>
   </div>
   <?php require_once './includes/footer.php'; ?>

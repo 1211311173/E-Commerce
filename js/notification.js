@@ -1,12 +1,16 @@
-'use strict';
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-// notification toast variables
-const notificationToast = document.querySelector('[data-toast]');
-const toastCloseBtn = document.querySelector('[data-toast-close]');
+  // notification toast variables
+  const notificationToastElement = document.querySelector('[data-toast]');
+  const toastCloseBtnElement = document.querySelector('[data-toast-close]');
 
-// notification toast eventListener
-toastCloseBtn.addEventListener('click', function () {
-  notificationToast.classList.add('closed');
+  // notification toast eventListener
+  if (toastCloseBtnElement && notificationToastElement) {
+    toastCloseBtnElement.addEventListener('click', function () {
+      notificationToastElement.classList.add('closed');
+    });
+  }
 });
 
 
