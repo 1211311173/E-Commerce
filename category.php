@@ -1,9 +1,7 @@
 <!--  -->
-<?php 
-include_once('./includes/headerNav.php');
-require_once './includes/topheadactions.php';
-require_once './includes/mobilenav.php';
-require_once './includes/desktopnav.php';
+<?php include_once('./includes/headerNav.php'); ?>
+<?php require_once './includes/topheadactions.php'; ?>
+<?php require_once './includes/mobilenav.php'; ?>
 
 <?php
 // work on getting string with spaces from url
@@ -11,6 +9,7 @@ $category_ID = "";
 if (isset($_GET['category'])) {
   $category_ID = $_GET['category'];
 }
+
 
 $items = get_items_by_category_items($category_ID);
 
@@ -21,6 +20,16 @@ $items = get_items_by_category_items($category_ID);
     - HEADER
   -->
 <header>
+  <!-- top head action, search etc in php -->
+  <!-- inc/topheadactions.php -->
+  <?php require_once './includes/topheadactions.php'; ?>
+  <!-- desktop navigation -->
+  <!-- inc/desktopnav.php -->
+  <?php require_once './includes/desktopnav.php' ?>
+  <!-- mobile nav in php -->
+  <!-- inc/mobilenav.php -->
+  <?php require_once './includes/mobilenav.php'; ?>
+
 </header>
 
 <!--

@@ -1,9 +1,9 @@
-<?php
-require_once '../includes/session_helper.php';
+<?php 
+    
+   //this is restriction for normal user to access admin panel
+   session_start();
+   if($_SESSION['customer_role']!='admin'){
+   header("location:../index.php?AdminRestricted");
+  }
 
-// Restrict access to admin panel for non-admin users
-if (!isAdmin()) {
-    header("location:../index.php?AdminRestricted");
-    exit;
-}
-?>
+  ?>
