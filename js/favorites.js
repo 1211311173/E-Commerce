@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', function () {
         icon.addEventListener('click', function (e) {
             e.preventDefault();
             const productId = this.dataset.productId;
+
+            // Skip if it's the header heart icon (productId = 0)
+            if (productId === '0') {
+                window.location.href = 'favorites.php';
+                return;
+            }
+
             const isFavorited = this.classList.contains('favorited');
 
             // Check if user is logged in
