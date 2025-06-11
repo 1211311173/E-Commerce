@@ -1,18 +1,22 @@
-<?php  session_start();
-	include_once 'includes/config.php';
-	//  all functions
-	require_once 'functions/functions.php';
+<?php
+require_once 'includes/session_helper.php';
+include_once 'includes/config.php';
+//  all functions
+require_once 'functions/functions.php';
 
-	//run whenever this file is used no need of isset or any condition to get website image footer etc
-	$sql5 ="SELECT * FROM  settings;";
+// Initialize website settings
+initializeWebsiteSettings($conn);
 
-	$result5 = $conn->query($sql5);
-	$row5 = $result5->fetch_assoc();
-	$_SESSION['web-name'] = $row5['website_name'];
-	$_SESSION['web-img'] = $row5['website_logo'];
-	$_SESSION['web-footer'] = $row5['website_footer'];
+//run whenever this file is used no need of isset or any condition to get website image footer etc
+$sql5 ="SELECT * FROM  settings;";
 
-	// TODO: Also update setting to add info email, whatsapp, address etc to change it dynamically
+$result5 = $conn->query($sql5);
+$row5 = $result5->fetch_assoc();
+$_SESSION['web-name'] = $row5['website_name'];
+$_SESSION['web-img'] = $row5['website_logo'];
+$_SESSION['web-footer'] = $row5['website_footer'];
+
+// TODO: Also update setting to add info email, whatsapp, address etc to change it dynamically
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +33,7 @@
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="./images/flogo/fav.png" type="image/x-icon" />
 	
-    <title><?php echo $_SESSION['web-name']; ?></title>
+    <title><?php echo getSessionValue('web-name', 'E-Commerce Store'); ?></title>
 
 	
 
@@ -77,3 +81,6 @@
 ?>
 
     <div id="toast" class="toast"></div>
+
+    <!-- Header -->
+    <!-- The main header is now removed as requested. -->
