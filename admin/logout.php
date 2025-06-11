@@ -1,6 +1,5 @@
-<?php
-require_once '../includes/session_helper.php';
-clearSession();
-header("Location:login.php");
-exit;
+<?php 
+   session_start();
+   unset($_SESSION['logged-in']);
+   header("Location:login.php");
 ?>

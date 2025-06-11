@@ -19,12 +19,15 @@ $bags = get_bags_category();
 
 // Get all new arrivals
 $new_arrivals1 = get_new_arrivals();
+$new_arrivals2 = get_new_arrivals();
 
 // Get trending products
 $trending_products1 = get_trending_products();
+$trending_products2 = get_trending_products();
 
 // Get top rated products
 $top_rated_products1 = get_top_rated_products();
+$top_rated_products2 = get_top_rated_products();
 ?>
 
 
@@ -251,7 +254,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
                 <!-- get element from table with id greater than 4 -->
                 <?php
                 $counter_na2 = 0;
-                while ($row2 = mysqli_fetch_assoc($new_arrivals1)) {
+                while ($row2 = mysqli_fetch_assoc($new_arrivals2)) {
                   // breaks after printing 4 items
                   if ($counter_na2 == 4) {
                     break;
@@ -355,7 +358,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
                 <!-- get element from table with id greater than 4 -->
                 <?php
                 $counter_tr2 = 0;
-                while ($row2 = mysqli_fetch_assoc($trending_products1)) {
+                while ($row2 = mysqli_fetch_assoc($trending_products2)) {
                   // breaks after printing 4 items
                   if ($counter_tr2 == 4) {
                     break;
@@ -460,7 +463,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
                 <!-- get element from table with id greater than 4 -->
                 <?php
                 $counter_tr2 = 0;
-                while ($row2 = mysqli_fetch_assoc($top_rated_products1)) {
+                while ($row2 = mysqli_fetch_assoc($top_rated_products2)) {
                   // breaks after printing 4 items
                   if ($counter_tr2 == 4) {
                     break;

@@ -1,13 +1,10 @@
-<?php
-require_once 'includes/session_helper.php';
-?>
 <!-- desktop navigation -->
 <nav class="desktop-navigation-menu">
   <div class="container">
     <ul class="desktop-menu-category-list">
 
       <li class="menu-category">
-        <a href="index.php?id=<?php echo isLoggedIn() ? getCurrentUserId() : 'unknown'; ?>"
+        <a href="index.php?id=<?php echo (isset($_SESSION['customer_name'])) ? $_SESSION['id'] : 'unknown'; ?>"
           class="menu-title">
           Home
         </a>
@@ -22,35 +19,37 @@ require_once 'includes/session_helper.php';
       </li>
 
       <li class="menu-category">
-        <a href="contact.php?id=<?php echo isLoggedIn() ? getCurrentUserId() : 'unknown'; ?>"
+        <a href="contact.php?id=<?php echo (isset($_SESSION['customer_name'])) ? $_SESSION['id'] : 'unknown'; ?>"
           class="menu-title">
           Contact
         </a>
       </li>
 
       <li class="menu-category">
-        <a href="about.php?id=<?php echo isLoggedIn() ? getCurrentUserId() : 'unknown'; ?>"
+        <a href="about.php?id=<?php echo (isset($_SESSION['customer_name'])) ? $_SESSION['id'] : 'unknown'; ?>"
           class="menu-title">About</a>
       </li>
 
-      <!-- Profile Link Setup -->
-      <?php if (isLoggedIn()): ?>
+      <!-- Prfile Link Setup -->
+      <!-- if logged in -->
+      <?php if (isset($_SESSION['id'])) { ?>
+
         <li class="menu-category" style="opacity:1">
-          <a href="profile.php?id=<?php echo getCurrentUserId(); ?>"
+          <a href="profile.php?id=<?php echo (isset($_SESSION['customer_name'])) ? $_SESSION['id'] : 'unknown'; ?>"
             class="menu-title">
             Profile
           </a>
-        </li>
-      <?php endif; ?>
 
-      <!-- Visit Admin Panel After Login -->
-      <?php if (isAdmin()): ?>
+        <?php } ?>
+
+        <!-- Visit Admin Panel After Login -->
+        <?php if (isset($_SESSION['logged-in'])) { ?>
         <li class="menu-category">
           <a href="admin/post.php" class="menu-title">
             Admin Panel
           </a>
         </li>
-      <?php endif; ?>
+      <?php } ?>
     </ul>
   </div>
 </nav>
