@@ -55,6 +55,10 @@ if(isset($_FILES['prod-img'])){
     $result = $secureDB->insert($sql, [$category, $subcategory, $title, $price, $discount, $description, $today_date, $file_name, $noofitem, $author], 'sssddsssss');
 
     if ($result) {
+        // Log product addition
+        if (isset($_SESSION['id'])) {
+            logProductAdd($_SESSION['id'], $title);
+        }
         header("location:post.php?success");
     } else {
         echo "Error saving product. Please try again.";
