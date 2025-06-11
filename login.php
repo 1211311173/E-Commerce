@@ -64,6 +64,9 @@ if (isset($_POST['login'])) {
         $_SESSION['id'] = $row['customer_id'];
         $_SESSION['customer_role'] = $row['customer_role'];
 
+        // Log successful login
+        logLoginSuccess($row['customer_id'], $row['customer_email']);
+
         // Check for redirect parameter
         $redirect_url = "profile.php?id={$_SESSION['id']}";
         if (isset($_GET['redirect']) && !empty($_GET['redirect'])) {
@@ -81,10 +84,14 @@ if (isset($_POST['login'])) {
         // put exit after a redirect as header() does not stop execution
         exit;
       } else {
+        // Log failed login - incorrect password
+        logLoginFailure($email, 'Incorrect password');
         $errors[] = "Incorrect password. Please try again.";
       }
     } else {
       if ($_POST['email']) { //it means it will run if email field is filled
+        // Log failed login - account not found
+        logLoginFailure($email, 'Account not found');
         $errors[] = "Account not found. Please sign up first.";
       }
     }
@@ -100,7 +107,7 @@ if (isset($_POST['login'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-  <link rel="stylesheet" href="css/customer-login.css">    
+  <link rel="stylesheet" href="css/customer-login.css">
   <title>Login</title>
 </head>
 
@@ -112,8 +119,8 @@ if (isset($_POST['login'])) {
       <div class="logo-box">
         <img src="admin/upload/<?php echo $_SESSION['web-img']; ?>" alt="logo" width="200px" />
       </div>
-      
-      <?php 
+
+      <?php
       // Display error messages
       if (!empty($errors)) {
         echo '<div class="error-message">';
@@ -122,13 +129,13 @@ if (isset($_POST['login'])) {
         }
         echo '</div>';
       }
-      
+
       // Display success messages
       if (!empty($success_message)) {
         echo '<div class="success-message">' . htmlspecialchars($success_message) . '</div>';
       }
       ?>
-      
+
       <div class="row mb-3">
         <!-- <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label> -->
         <div class="col-sm-12">

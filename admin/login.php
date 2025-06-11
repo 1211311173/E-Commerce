@@ -112,10 +112,20 @@ include_once('./includes/restriction.php');
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row['customer_pwd'])) {
           $_SESSION['logged-in'] = '1';
+
+          // Log successful admin login
+          logAdminLoginSuccess($row['customer_id'], $row['customer_email']);
+
           header("Location: ./post.php");
         } else {
+          // Log failed admin login - incorrect password
+          logAdminLoginFailure($email, 'Incorrect password');
           echo '<div class="alert alert-danger">Username and Password are not matched.</div>';
         }
+      } else {
+        // Log failed admin login - account not found
+        logAdminLoginFailure($email, 'Account not found');
+        echo '<div class="alert alert-danger">Account not found.</div>';
       }
     }
   }

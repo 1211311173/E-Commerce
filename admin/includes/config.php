@@ -8,7 +8,7 @@ $serverName = "localhost";
 $dBUsername = "root";
 $dBPassword = "";
 $dBName = "db_ecommerce";
-$dbPort = 3307;
+$dbPort = 3306;
 
 //Before we can access data in the MySQL database, we need to be able to connect to the server i.e php
 $conn = new mysqli($serverName,$dBUsername,$dBPassword,$dBName, $dbPort);
@@ -23,4 +23,7 @@ $conn->set_charset("utf8");
 
 // Include security functions
 require_once __DIR__ . '/../../includes/security.php';
+
+// Include audit logger
+require_once __DIR__ . '/../../includes/audit_logger.php';
 ?>
