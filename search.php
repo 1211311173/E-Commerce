@@ -111,9 +111,9 @@
                       $search_result = $secureDB->select($search_query, [$term1, $term2, $offset, $limit], 'ssii');
                   } else {
                       // Use prepared statement for single term
-                      $search_query = "SELECT * FROM products WHERE products.product_title LIKE ? OR products.product_catag LIKE ? ORDER BY products.product_id DESC LIMIT ?, ?";
+                      $search_query = "SELECT * FROM products WHERE products.product_title LIKE ? OR products.product_catag LIKE ? OR products.subcategory LIKE ? ORDER BY products.product_id DESC LIMIT ?, ?";
                       $term = '%' . $sanitized_terms[0] . '%';
-                      $search_result = $secureDB->select($search_query, [$term, $term, $offset, $limit], 'ssii');
+                      $search_result = $secureDB->select($search_query, [$term ,$term, $term, $offset, $limit], 'sssii');
                   }
               }
               $new_product_counter = 1;
