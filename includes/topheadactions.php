@@ -6,9 +6,13 @@ if (isset($_SESSION['mycart'])) {
 
 // Get total order count for logged-in user
 $total_orders = 0;
+$total_favorites = 0;
+
 if (isset($_SESSION['id'])) {
   include_once('./includes/config.php');
   $customer_id = $_SESSION['id'];
+  
+  // Get order count
   $order_count_query = "SELECT COUNT(*) as total_orders FROM orders WHERE customer_id = ?";
   $stmt = $conn->prepare($order_count_query);
   $stmt->bind_param("i", $customer_id);
@@ -19,6 +23,18 @@ if (isset($_SESSION['id'])) {
     $total_orders = $row['total_orders'];
   }
   $stmt->close();
+  
+  // Get favorites count
+  $favorites_count_query = "SELECT COUNT(*) as total_favorites FROM favorites WHERE customer_id = ?";
+  $stmt = $conn->prepare($favorites_count_query);
+  $stmt->bind_param("i", $customer_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $total_favorites = $row['total_favorites'];
+  }
+  $stmt->close();
 }
 
 ?>
@@ -26,25 +42,25 @@ if (isset($_SESSION['id'])) {
   <div class="container">
     <ul class="header-social-container">
       <li>
-        <a href="#" class="social-link">
+        <a href="./coming-soon.php" class="social-link">
           <ion-icon name="logo-facebook"></ion-icon>
         </a>
       </li>
 
       <li>
-        <a href="#" class="social-link">
+        <a href="./coming-soon.php" class="social-link">
           <ion-icon name="logo-twitter"></ion-icon>
         </a>
       </li>
 
       <li>
-        <a href="#" class="social-link">
+        <a href="./coming-soon.php" class="social-link">
           <ion-icon name="logo-instagram"></ion-icon>
         </a>
       </li>
 
       <li>
-        <a href="#" class="social-link">
+        <a href="./coming-soon.php" class="social-link">
           <ion-icon name="logo-linkedin"></ion-icon>
         </a>
       </li>
@@ -97,10 +113,16 @@ if (isset($_SESSION['id'])) {
         </button>
       </form>
     </div>
-    <div class="header-user-actions"> <!-- Favourite Counter -->
+
+     <!-- Favourite Counter -->
+    <div class="header-user-actions">
       <button class="action-btn" title="Favorites">
-        <ion-icon name="heart-outline" title=""></ion-icon>
-        <span class="count">0</span>
+        <a href="./favorites.php">
+          <ion-icon name="heart-outline" title=""></ion-icon>
+        </a>
+        <span class="count">
+          <?php echo $total_favorites; ?>
+        </span>
       </button>
 
       <!-- Cart Button -->

@@ -2,11 +2,17 @@
 session_start();
 
 if (isset($_POST['add_to_cart'])) {
+  
+  $redirect_page = 'viewdetail.php?id=' . $_POST['product_id'] . '&category=' . $_POST['product_category'];
+  
+  if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'favorites.php') !== false) {
+    $redirect_page = 'favorites.php';
+  }
+  
   if (isset($_SESSION['mycart'])) {
     $item_id_column = array_column($_SESSION['mycart'], 'product_id');
     if (in_array($_POST['product_id'], $item_id_column)) {
-      // Product already in cart, redirect back
-      header('location:viewdetail.php?id=' . $_POST['product_id'] . '&category=' . $_POST['product_category'] . '&status=alreadyincart');
+      header('location:' . $redirect_page . (strpos($redirect_page, '?') ? '&' : '?') . 'status=alreadyincart');
     } else {
       // Add new item to cart
       $count_cart = count($_SESSION['mycart']);
@@ -18,7 +24,7 @@ if (isset($_POST['add_to_cart'])) {
         'product_qty' => $_POST['product_qty'],
         'product_img' => $_POST['product_img']
       );
-      header('location:viewdetail.php?id=' . $_POST['product_id'] . '&category=' . $_POST['product_category'] . '&status=added');
+      header('location:' . $redirect_page . (strpos($redirect_page, '?') ? '&' : '?') . 'status=added');
     }
   } else {
     // Cart is empty, add the first item
@@ -30,7 +36,7 @@ if (isset($_POST['add_to_cart'])) {
       'product_qty' => $_POST['product_qty'],
       'product_img' => $_POST['product_img']
     );
-    header('location:viewdetail.php?id=' . $_POST['product_id'] . '&category=' . $_POST['product_category'] . '&status=added');
+    header('location:' . $redirect_page . (strpos($redirect_page, '?') ? '&' : '?') . 'status=added');
   }
 }
 
@@ -40,9 +46,8 @@ if (isset($_POST['remove_from_cart']) && isset($_POST['product_id_to_remove'])) 
     foreach ($_SESSION['mycart'] as $key => $value) {
       if ($value['product_id'] == $_POST['product_id_to_remove']) {
         unset($_SESSION['mycart'][$key]);
-        // Re-index the array to prevent issues with non-contiguous keys
         $_SESSION['mycart'] = array_values($_SESSION['mycart']);
-        break; // Item found and removed, exit loop
+        break; 
       }
     }
   }

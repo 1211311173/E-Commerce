@@ -248,7 +248,7 @@
       <img src="./images/payment.png" alt="payment method" class="payment-img" />
 
       <p class="copyright">
-        Copyright &copy; <a href="#"><?php echo $_SESSION['web-footer']; ?></a> all rights reserved.
+        Copyright &copy; <a href="./coming-soon.php"><?php echo $_SESSION['web-footer']; ?></a> all rights reserved.
       </p>
     </div>
   </div>

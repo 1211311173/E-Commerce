@@ -2,30 +2,48 @@
 
 <div class="overlay" data-overlay></div>
 
+<!-- HEADER -->
 <header>
-  <?php require_once './includes/topheadactions.php'; ?>
-  <?php require_once './includes/desktopnav.php' ?>
-  <?php require_once './includes/mobilenav.php'; ?>
+    <!-- Top head action, search etc -->
+    <?php require_once './includes/topheadactions.php'; ?>
+    <!-- Desktop navigation -->
+    <?php require_once './includes/desktopnav.php'; ?>
+    <!-- Mobile navigation -->
+    <?php require_once './includes/mobilenav.php'; ?>
+    <!-- Coming Soon Styles -->
+    <link rel="stylesheet" href="css/coming-soon-styles.css">
 </header>
 
+<!-- MAIN CONTENT -->
 <main>
-  <div class="product-container">
-    <div class="container">
-      <div class="product-box">
-        <div class="product-main" style="text-align: center; padding: 50px 20px;">
-          <h1 style="font-size: 2.5em; margin-bottom: 20px; color: #333;">Coming Soon!</h1>
-          <div style="max-width: 600px; margin: 0 auto;">
-            <p style="font-size: 1.2em; color: #666; margin-bottom: 30px;">
-              We're working hard to bring you this feature. Please check back soon!
+    <div class="coming-soon-container">
+        <div class="coming-soon-content">
+            <div class="coming-soon-icon">
+                <ion-icon name="construct-outline"></ion-icon>
+            </div>
+            
+            <h1 class="coming-soon-title">Coming Soon!</h1>
+            
+            <p class="coming-soon-subtitle">
+                We're working hard to bring you this feature. Our team is putting the finishing touches 
+                on something amazing. Please check back soon for updates!
             </p>
-            <a href="./index.php" class="modern-slide-btn" style="display: inline-block; text-decoration: none;">
-              Return to Homepage
+            
+            <a href="index.php" class="btn-return-home">
+                <ion-icon name="home-outline"></ion-icon>
+                Return to Homepage
             </a>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </main>
 
-<?php require_once './includes/footer.php'; ?> 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const content = document.querySelector('.coming-soon-content');
+    if (content) {
+        content.style.animationDelay = '0.3s';
+    }
+});
+</script>
+
+<?php require_once './includes/footer.php'; ?>

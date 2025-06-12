@@ -21,14 +21,8 @@ $product_category = $_GET['category'];
 $product_name = '';
 $product_price = '';
 
-if ($product_category == "deal_of_day") {
-  $item = get_deal_of_day_by_id($product_ID);
-} else {
-  // get specfic item from table
-  $item = get_product($product_ID);
-}
-// get user reviews
-// $user_reviews = get_user_reviews();
+$item = get_product($product_ID);
+
 ?>
 
 <div class="overlay" data-overlay></div>

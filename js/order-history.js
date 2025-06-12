@@ -176,36 +176,3 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
 });
-
-// Export functions for use in other files if needed
-window.OrderHistory = {
-    formatDate: function(dateString) {
-        const options = { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        };
-        return new Date(dateString).toLocaleDateString('en-US', options);
-    },
-    
-    formatCurrency: function(amount) {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(amount);
-    },
-    
-    showOrderDetails: function(orderId) {
-        console.log('Show details for order:', orderId);
-    },
-    
-    trackOrder: function(orderId) {
-        console.log('Track order:', orderId);
-    },
-    
-    reorderItems: function(orderId) {
-        console.log('Reorder items from order:', orderId);
-    }
-};

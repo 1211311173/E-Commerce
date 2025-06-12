@@ -34,7 +34,7 @@ $deals_of_the_day = get_deal_of_day();
                   <ion-icon name="star"></ion-icon>
                 </div>
 
-                <a href="./viewdetail.php?id=<?php echo $row['deal_id'] ?>&category=<?php echo "deal_of_day" ?>">
+                <a href="./coming-soon.php">
                   <h3 class="showcase-title">
                     <?php echo htmlspecialchars($row['deal_title']); ?>
                   </h3>
@@ -50,7 +50,9 @@ $deals_of_the_day = get_deal_of_day();
                   <del>$<?php echo  $row['deal_net_price']?></del>
                 </div>
 
-                <button class="add-cart-btn">Premium</button>
+                <button class="add-cart-btn">
+                  <a href="./coming-soon.php" style="color: white;">Premium</a>
+                </button>
 
                 <div class="showcase-status">
                   <div class="wrapper">

@@ -717,7 +717,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
           <!-- -->
           <img src="./images/cta-banner-sale.jpg" alt="summer collection" class="cta-banner" />
 
-          <a href="#" class="cta-content">
+          <a href="./coming-soon.php" class="cta-content">
             <p class="discount">25% Discount</p>
 
             <h2 class="cta-title">Collection</h2>
@@ -736,7 +736,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
           <h2 class="title">Our Services</h2>
 
           <div class="service-container">
-            <a href="#" class="service-item">
+            <a href="./coming-soon.php" class="service-item">
               <div class="service-icon">
                 <ion-icon name="boat-outline"></ion-icon>
               </div>
@@ -747,7 +747,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
               </div>
             </a>
 
-            <a href="#" class="service-item">
+            <a href="./coming-soon.php" class="service-item">
               <div class="service-icon">
                 <ion-icon name="rocket-outline"></ion-icon>
               </div>
@@ -758,7 +758,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
               </div>
             </a>
 
-            <a href="#" class="service-item">
+            <a href="./coming-soon.php" class="service-item">
               <div class="service-icon">
                 <ion-icon name="call-outline"></ion-icon>
               </div>
@@ -769,7 +769,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
               </div>
             </a>
 
-            <a href="#" class="service-item">
+            <a href="./coming-soon.php" class="service-item">
               <div class="service-icon">
                 <ion-icon name="arrow-undo-outline"></ion-icon>
               </div>
@@ -780,7 +780,7 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
               </div>
             </a>
 
-            <a href="#" class="service-item">
+            <a href="./coming-soon.php" class="service-item">
               <div class="service-icon">
                 <ion-icon name="ticket-outline"></ion-icon>
               </div>
@@ -805,15 +805,15 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
     <div class="container">
       <div class="blog-container has-scrollbar">
         <div class="blog-card">
-          <a href="#">
+          <a href="./coming-soon.php">
             <img src="./images/blog/blog-1.jpg" alt="Clothes Retail KPIs 2021 Guide for Clothes Executives" width="300"
               class="blog-banner" />
           </a>
 
           <div class="blog-content">
-            <a href="#" class="blog-category">Fashion</a>
+            <a href="./coming-soon.php" class="blog-category">Fashion</a>
 
-            <a href="#">
+            <a href="./coming-soon.php">
               <h3 class="blog-title">
                 Clothes Retail KPIs 2021 Guide for Clothes Executives.
               </h3>
@@ -827,16 +827,16 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
         </div>
 
         <div class="blog-card">
-          <a href="#">
+          <a href="./coming-soon.php">
             <img src="./images/blog/blog-2.jpg" alt="Curbside fashion Trends: How to Win the Pickup Battle."
               class="blog-banner" width="300" />
           </a>
 
           <div class="blog-content">
-            <a href="#" class="blog-category">Clothes</a>
+            <a href="./coming-soon.php" class="blog-category">Clothes</a>
 
             <h3>
-              <a href="#" class="blog-title">Curbside fashion Trends: How to Win the Pickup Battle.</a>
+              <a href="./coming-soon.php" class="blog-title">Curbside fashion Trends: How to Win the Pickup Battle.</a>
             </h3>
 
             <p class="blog-meta">
@@ -847,16 +847,16 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
         </div>
 
         <div class="blog-card">
-          <a href="#">
+          <a href="./coming-soon.php">
             <img src="./images/blog/blog-3.jpg" alt="EBT vendors: Claim Your Share of SNAP Online Revenue."
               class="blog-banner" width="300" />
           </a>
 
           <div class="blog-content">
-            <a href="#" class="blog-category">Shoes</a>
+            <a href="./coming-soon.php" class="blog-category">Shoes</a>
 
             <h3>
-              <a href="#" class="blog-title">EBT vendors: Claim Your Share of SNAP Online Revenue.</a>
+              <a href="./coming-soon.php" class="blog-title">EBT vendors: Claim Your Share of SNAP Online Revenue.</a>
             </h3>
 
             <p class="blog-meta">
@@ -867,16 +867,16 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
         </div>
 
         <div class="blog-card">
-          <a href="#">
+          <a href="./coming-soon.php">
             <img src="./images/blog/blog-4.jpg" alt="Curbside fashion Trends: How to Win the Pickup Battle."
               class="blog-banner" width="300" />
           </a>
 
           <div class="blog-content">
-            <a href="#" class="blog-category">Electronics</a>
+            <a href="./coming-soon.php" class="blog-category">Electronics</a>
 
             <h3>
-              <a href="#" class="blog-title">Curbside fashion Trends: How to Win the Pickup Battle.</a>
+              <a href="./coming-soon.php" class="blog-title">Curbside fashion Trends: How to Win the Pickup Battle.</a>
             </h3>
 
             <p class="blog-meta">

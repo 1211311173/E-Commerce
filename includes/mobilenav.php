@@ -118,15 +118,15 @@
 
               <ul class="submenu-category-list" data-accordion>
                 <li class="submenu-category">
-                  <a href="#" class="submenu-title">English</a>
+                  <a href="./coming-soon.php" class="submenu-title">English</a>
                 </li>
 
                 <li class="submenu-category">
-                  <a href="#" class="submenu-title">Espa&ntilde;ol</a>
+                  <a href="./coming-soon.php" class="submenu-title">Espa&ntilde;ol</a>
                 </li>
 
                 <li class="submenu-category">
-                  <a href="#" class="submenu-title">Fren&ccedil;h</a>
+                  <a href="./coming-soon.php" class="submenu-title">Fren&ccedil;h</a>
                 </li>
               </ul>
             </li>
@@ -139,11 +139,11 @@
 
               <ul class="submenu-category-list" data-accordion>
                 <li class="submenu-category">
-                  <a href="#" class="submenu-title">USD &dollar;</a>
+                  <a href="./coming-soon.php" class="submenu-title">USD &dollar;</a>
                 </li>
 
                 <li class="submenu-category">
-                  <a href="#" class="submenu-title">EUR &euro;</a>
+                  <a href="./coming-soon.php" class="submenu-title">EUR &euro;</a>
                 </li>
               </ul>
             </li>
@@ -151,25 +151,25 @@
 
           <ul class="menu-social-container">
             <li>
-              <a href="#" class="social-link">
+              <a href="./coming-soon.php" class="social-link">
                 <ion-icon name="logo-facebook"></ion-icon>
               </a>
             </li>
 
             <li>
-              <a href="#" class="social-link">
+              <a href="./coming-soon.php" class="social-link">
                 <ion-icon name="logo-twitter"></ion-icon>
               </a>
             </li>
 
             <li>
-              <a href="#" class="social-link">
+              <a href="./coming-soon.php" class="social-link">
                 <ion-icon name="logo-instagram"></ion-icon>
               </a>
             </li>
 
             <li>
-              <a href="#" class="social-link">
+              <a href="./coming-soon.php" class="social-link">
                 <ion-icon name="logo-linkedin"></ion-icon>
               </a>
             </li>
