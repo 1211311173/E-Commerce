@@ -4,20 +4,30 @@ namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 
+// Include the security functions file for InputValidator
+require_once __DIR__ . '/../../includes/security.php';
+
 /**
  * Basic Unit Test Example
  * Tests fundamental application components
  */
 class BasicFunctionsTest extends TestCase
-{
-    public function testSanitizeInput()
+{    public function testSanitizeInput()
     {
-        // Test HTML sanitization
+        // Test HTML sanitization using the application's InputValidator
         $input = '<script>alert("xss")</script>Hello World';
-        $expected = 'Hello World';
-        $result = strip_tags($input);
+        $expected = '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;Hello World';
+        $result = \InputValidator::sanitizeString($input);
         
         $this->assertEquals($expected, $result);
+        
+        // Test that the sanitized string is safe to output (no executable script tags)
+        $this->assertStringNotContainsString('<script>', $result);
+        $this->assertStringNotContainsString('</script>', $result);
+        
+        // Verify the dangerous content has been escaped
+        $this->assertStringContainsString('&lt;script&gt;', $result);
+        $this->assertStringContainsString('&lt;/script&gt;', $result);
     }
     
     public function testValidateEmail()

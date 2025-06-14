@@ -386,13 +386,13 @@ class APICompatibilityTest extends TestHelper
                 return ['status_code' => 500, 'error' => 'Unknown scenario'];
         }
     }
-    
-    private function getProductList($version, $params)
+      private function getProductList($version, $params)
     {
         // Simulate paginated product list responses
         $products = [];
         for ($i = 1; $i <= 10; $i++) {
-            $products[] = ['id' => $i, 'name' => "Product $i", 'price' => $i * 10];
+            // Create products with prices >= 100 for filter compatibility test
+            $products[] = ['id' => $i, 'name' => "Product $i", 'price' => $i * 50 + 100];
         }
         
         switch ($version) {

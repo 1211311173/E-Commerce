@@ -30,8 +30,7 @@ class TestHelper extends TestCase
      * Create test tables
      */
     private static function createTestTables()
-    {
-        $tables = [
+    {        $tables = [
             'users' => "
                 CREATE TABLE users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,6 +39,17 @@ class TestHelper extends TestCase
                     password VARCHAR(255),
                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            ",
+            'customer' => "
+                CREATE TABLE customer (
+                    customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    customer_fname VARCHAR(50),
+                    customer_email VARCHAR(100) UNIQUE,
+                    customer_pwd VARCHAR(255),
+                    customer_phone VARCHAR(15),
+                    customer_address TEXT,
+                    customer_role VARCHAR(50) DEFAULT 'normal'
                 )
             ",
             'products' => "
@@ -92,11 +102,12 @@ class TestHelper extends TestCase
         // Insert test products
         $stmt = self::$testDatabase->prepare("INSERT INTO products (name, description, price, category_id, stock_quantity) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute(['Smartphone', 'Latest smartphone model', 699.99, 1, 50]);
-        $stmt->execute(['T-Shirt', 'Cotton t-shirt', 29.99, 2, 100]);
-        
-        // Insert test user
+        $stmt->execute(['T-Shirt', 'Cotton t-shirt', 29.99, 2, 100]);        // Insert test user (both in old and new tables for compatibility)
         $stmt = self::$testDatabase->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
         $stmt->execute(['testuser', 'test@example.com', password_hash('password123', PASSWORD_DEFAULT)]);
+        
+        $stmt = self::$testDatabase->prepare("INSERT INTO customer (customer_fname, customer_email, customer_pwd, customer_phone, customer_address) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute(['testuser', 'test@example.com', password_hash('password123', PASSWORD_DEFAULT), '1234567890', 'Test Address']);
     }
     
     /**

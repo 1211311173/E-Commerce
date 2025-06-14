@@ -41,15 +41,13 @@ class UserRegistrationTest extends TestHelper
         // Test user creation
         $userId = $this->createUserInDatabase($registrationData);
         $this->assertGreaterThan(0, $userId);
-        
-        // Test user can be retrieved
+          // Test user can be retrieved
         $user = $this->getUserFromDatabase($userId);
         $this->assertNotNull($user);
-        $this->assertEquals($registrationData['username'], $user['username']);
-        $this->assertEquals($registrationData['email'], $user['email']);
-        
-        // Test password is properly hashed
-        $this->assertTrue(password_verify($registrationData['password'], $user['password']));
+        $this->assertEquals($registrationData['username'], $user['customer_fname']);
+        $this->assertEquals($registrationData['email'], $user['customer_email']);
+          // Test password is properly hashed
+        $this->assertTrue(password_verify($registrationData['password'], $user['customer_pwd']));
         
         // Test duplicate registration prevention
         $this->expectDuplicateUserError($registrationData);
@@ -85,19 +83,17 @@ class UserRegistrationTest extends TestHelper
         // Create a test user
         $userData = $this->createTestUser();
         $userId = $this->createUserInDatabase($userData);
-        
-        // Test profile update
+          // Test profile update
         $updateData = [
-            'email' => 'updated_' . $userData['email'],
-            'first_name' => 'UpdatedFirstName',
-            'last_name' => 'UpdatedLastName'
+            'customer_email' => 'updated_' . $userData['email'],
+            'customer_fname' => 'UpdatedFirstName'
         ];
         
         $this->updateUserProfile($userId, $updateData);
-        
-        // Verify updates
+          // Verify updates
         $updatedUser = $this->getUserFromDatabase($userId);
-        $this->assertEquals($updateData['email'], $updatedUser['email']);
+        $this->assertEquals($updateData['customer_email'], $updatedUser['customer_email']);
+        $this->assertEquals($updateData['customer_fname'], $updatedUser['customer_fname']);
     }
     
     private function validateRegistrationData($data)
@@ -119,40 +115,37 @@ class UserRegistrationTest extends TestHelper
         $this->assertNotEmpty($data['first_name']);
         $this->assertNotEmpty($data['last_name']);
     }
-    
-    private function createUserInDatabase($userData)
+      private function createUserInDatabase($userData)
     {
         $stmt = self::$db->prepare("
-            INSERT INTO users (username, email, password, created_at) 
-            VALUES (?, ?, ?, ?)
+            INSERT INTO customer (customer_fname, customer_email, customer_pwd, customer_phone, customer_address) 
+            VALUES (?, ?, ?, ?, ?)
         ");
         
         $result = $stmt->execute([
             $userData['username'],
             $userData['email'],
             password_hash($userData['password'], PASSWORD_DEFAULT),
-            date('Y-m-d H:i:s')
+            $userData['phone'] ?? '1234567890',
+            $userData['address'] ?? 'Test Address'
         ]);
         
         $this->assertTrue($result);
         return self::$db->lastInsertId();
     }
-    
-    private function getUserFromDatabase($userId)
+      private function getUserFromDatabase($userId)
     {
-        $stmt = self::$db->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt = self::$db->prepare("SELECT * FROM customer WHERE customer_id = ?");
         $stmt->execute([$userId]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
-    
-    private function simulateLogin($username, $password)
+      private function simulateLogin($username, $password)
     {
-        $stmt = self::$db->prepare("SELECT id, password FROM users WHERE username = ?");
+        $stmt = self::$db->prepare("SELECT customer_id, customer_pwd FROM customer WHERE customer_fname = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-        
-        if ($user && password_verify($password, $user['password'])) {
-            return ['success' => true, 'user_id' => $user['id']];
+          if ($user && password_verify($password, $user['customer_pwd'])) {
+            return ['success' => true, 'user_id' => $user['customer_id']];
         }
         
         return ['success' => false];
@@ -167,9 +160,8 @@ class UserRegistrationTest extends TestHelper
             $setParts[] = "$field = ?";
             $values[] = $value;
         }
-        
-        $values[] = $userId;
-        $sql = "UPDATE users SET " . implode(', ', $setParts) . " WHERE id = ?";
+          $values[] = $userId;
+        $sql = "UPDATE customer SET " . implode(', ', $setParts) . " WHERE customer_id = ?";
         
         $stmt = self::$db->prepare($sql);
         return $stmt->execute($values);
