@@ -112,3 +112,5 @@ $deals_of_the_day = get_deal_of_day();
     <div class="deal-dots-container"></div>
   </div>
 </div>
+
+<script src="./js/deal-countdown.js"></script>

@@ -263,7 +263,6 @@
 <script src="./js/modern-banner-slider.js"></script>
 <script src="./js/expandable-sections.js"></script>
 <script src="./js/deal-slider.js?v=<?php echo time(); ?>"></script>
-<script src="./js/deal-countdown.js"></script>
 <!--
     - ionicon link
   -->
