@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true">
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         bootstrap="bootstrap.php"
+         colors="true"
+         verbose="true"
+         testdox="true">
+    
     <testsuites>
-        <testsuite name="E-Commerce Test Suite">
-            <directory>src</directory>
+        <testsuite name="unit">
+            <directory>Unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>Integration</directory>
+        </testsuite>
+        <testsuite name="functional">
+            <directory>Functional</directory>
+        </testsuite>
+        <testsuite name="maintenance">
+            <directory>Maintenance</directory>
+        </testsuite>
+        <testsuite name="evolution">
+            <directory>Evolution</directory>
+        </testsuite>
+        <testsuite name="all">
+            <directory>.</directory>
         </testsuite>
     </testsuites>
-    <coverage>
+
+    <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">../</directory>
         </include>
-    </coverage>
-</phpunit> 
+        <exclude>
+            <directory>../vendor</directory>
+            <directory>../tests</directory>
+            <directory>../admin/upload</directory>
+            <directory>../images</directory>
+        </exclude>    </coverage>
+</phpunit>
