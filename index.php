@@ -43,12 +43,27 @@ $top_rated_products2 = get_top_rated_products();
   -->
 
 <?php
-$recent_orders = get_recent_orders();
+$recent_orders = get_latest_orders();
 if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
     $order = mysqli_fetch_assoc($recent_orders);
     $order_time = strtotime($order['order_date']);
-    $time_diff = time() - $order_time;
-    $minutes = floor($time_diff / 60);
+    $current_time = time();
+    
+    // Ensure we don't get negative time differences
+    if ($order_time > $current_time) {
+        $time_display = "1 Minute";
+    } else {
+        $time_diff = $current_time - $order_time;
+        $minutes = floor($time_diff / 60);
+        
+        // Convert to hours if minutes > 60
+        if ($minutes >= 60) {
+            $hours = floor($minutes / 60);
+            $time_display = $hours . " Hours";
+        } else {
+            $time_display = $minutes . " Minutes";
+        }
+    }
 ?>
 <div class="notification-toast" data-toast>
   <button class="toast-close-btn" data-toast-close>
@@ -60,12 +75,12 @@ if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
   </div>
 
   <div class="toast-detail">
-    <p class="toast-message"><?php echo htmlspecialchars($order['customer_name']); ?> just bought</p>
+    <p class="toast-message"><?php echo htmlspecialchars($order['customer_fname']); ?> just bought</p>
 
     <p class="toast-title"><?php echo htmlspecialchars($order['product_title']); ?></p>
 
     <p class="toast-meta">
-      <time datetime="PT<?php echo $minutes; ?>M"><?php echo $minutes; ?> Minutes</time> ago
+      <time datetime="PT<?php echo $minutes; ?>M"><?php echo $time_display; ?></time> ago
     </p>
   </div>
 </div>

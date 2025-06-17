@@ -1,9 +1,4 @@
 <?php
-/**
- * Security Functions for SQL Injection Prevention
- * This file contains secure database operations and input validation functions
- */
-
 class SecureDB {
     private $conn;
     
@@ -11,13 +6,6 @@ class SecureDB {
         $this->conn = $connection;
     }
     
-    /**
-     * Secure SELECT query with prepared statements
-     * @param string $query SQL query with placeholders (?)
-     * @param array $params Parameters to bind
-     * @param string $types Parameter types (s=string, i=integer, d=double, b=blob)
-     * @return mysqli_result|false
-     */
     public function select($query, $params = [], $types = '') {
         $stmt = $this->conn->prepare($query);
         if (!$stmt) {
@@ -27,7 +15,6 @@ class SecureDB {
         
         if (!empty($params)) {
             if (empty($types)) {
-                // Auto-detect types if not provided
                 $types = str_repeat('s', count($params));
             }
             $stmt->bind_param($types, ...$params);
@@ -40,13 +27,6 @@ class SecureDB {
         return $result;
     }
     
-    /**
-     * Secure INSERT query with prepared statements
-     * @param string $query SQL query with placeholders (?)
-     * @param array $params Parameters to bind
-     * @param string $types Parameter types
-     * @return bool
-     */
     public function insert($query, $params = [], $types = '') {
         $stmt = $this->conn->prepare($query);
         if (!$stmt) {
@@ -67,40 +47,18 @@ class SecureDB {
         return $result;
     }
     
-    /**
-     * Secure UPDATE query with prepared statements
-     * @param string $query SQL query with placeholders (?)
-     * @param array $params Parameters to bind
-     * @param string $types Parameter types
-     * @return bool
-     */
     public function update($query, $params = [], $types = '') {
         return $this->insert($query, $params, $types); // Same logic as insert
     }
-    
-    /**
-     * Secure DELETE query with prepared statements
-     * @param string $query SQL query with placeholders (?)
-     * @param array $params Parameters to bind
-     * @param string $types Parameter types
-     * @return bool
-     */
+
     public function delete($query, $params = [], $types = '') {
         return $this->insert($query, $params, $types); // Same logic as insert
     }
     
-    /**
-     * Get the last inserted ID
-     * @return int
-     */
     public function getLastInsertId() {
         return $this->conn->insert_id;
     }
     
-    /**
-     * Get affected rows count
-     * @return int
-     */
     public function getAffectedRows() {
         return $this->conn->affected_rows;
     }

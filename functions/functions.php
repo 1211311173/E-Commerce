@@ -181,7 +181,7 @@
     }
 
     // get recent orders for notification toast
-    function get_recent_orders() {
+    function get_latest_orders() {
         global $conn;
         $query = "SELECT o.order_id, o.order_date, oi.product_id, p.product_title, p.product_img, c.customer_fname 
                   FROM orders o 
@@ -190,7 +190,7 @@
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE o.order_status = 'confirmed' 
                   ORDER BY o.order_date DESC 
-                  LIMIT 5";
+                  LIMIT 1";
         
         return mysqli_query($conn, $query);
     }
