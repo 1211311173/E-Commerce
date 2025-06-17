@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document provides an overview of an e-commerce website built using HTML, CSS, Bootstrap, JavaScript, PHP, and MySQL. The website consists of both user-side and admin-side functionalities, allowing customers to browse and purchase products while enabling administrators to manage inventory, orders, and customer data.
+This document provides an overview of an e-commerce website built using HTML, CSS, Bootstrap, JavaScript, PHP, and MariaDB. The website consists of both user-side and admin-side functionalities, allowing customers to browse and purchase products while enabling administrators to manage inventory, orders, and customer data.
 
 ## Technologies Used
 
@@ -226,15 +226,15 @@ Follow these steps to install and run the e-commerce website:
 
    - If you have Git installed, open a terminal and run the following command:
      ```
-     git clone https://github.com/ShahandFahad/E-Commerce.git
+     git clone https://github.com/1211311173/E-Commerce.git
      ```
-   - Alternatively, you can download the repository as a ZIP file from the following URL: [https://github.com/ShahandFahad/E-Commerce/archive/refs/heads/main.zip](https://github.com/ShahandFahad/E-Commerce/archive/refs/heads/main.zip)
+   - Alternatively, you can download the repository as a ZIP file from the following URL: [https://github.com/1211311173/E-Commerce/archive/refs/heads/main.zip](https://github.com/1211311173/E-Commerce/archive/refs/heads/main.zip)
    - Extract the contents of the ZIP file to a directory of your choice.
 
 2. Configure Database:
 
    - Create a new MariaDB/MySQL database for the e-commerce website.
-   - Import the provided SQL file (`database.sql`) into your newly created database. This file contains the necessary tables and sample data for the website.
+   - Import the provided SQL file (`db_ecommerce.sql`) into your newly created database. This file contains the necessary tables and sample data for the website.
 
 3. Install Dependencies:
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2023 at 11:26 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.1.12
+-- Generation Time: Jun 01, 2025 at 07:32 AM
+-- Server version: 10.11.13-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_ecommerce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audit_log`
+--
+
+CREATE TABLE `audit_log` (
+  `log_id` int(11) NOT NULL,
+  `event_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) DEFAULT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `event_type` varchar(50) NOT NULL,
+  `event_status` enum('SUCCESS','FAILURE') NOT NULL,
+  `event_description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -118,7 +134,7 @@ INSERT INTO `category_bar` (`id`, `category_title`, `category_quantity`, `catego
 (1, 'Dress & frock', 53, 'coat.svg', 0x31),
 (2, 'Glasses & lens', 68, 'glasses.svg', 0x31),
 (3, 'Shorts & jeans', 84, 'shorts.svg', 0x31),
-(4, 'T-shirts', 35, 'tee.svg', 0x31),
+(4, 'T-shirt', 35, 'tee.svg', 0x31),
 (5, 'Jacket', 16, 'jacket.svg', 0x31),
 (6, 'Watch', 27, 'watch.svg', 0x31),
 (7, 'Hat & caps', 39, 'hat.svg', 0x31);
@@ -239,8 +255,28 @@ CREATE TABLE `deal_of_the_day` (
 --
 
 INSERT INTO `deal_of_the_day` (`deal_id`, `deal_title`, `deal_description`, `deal_net_price`, `deal_discounted_price`, `available_deal`, `sold_deal`, `deal_image`, `deal_status`, `deal_end_time`) VALUES
-(1, 'shampoo, conditioner & facewash packs', 'Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor\r\n                        dolor sit amet consectetur Lorem ipsum dolor', 200.00, 150.00, 40, 20, 'shampoo.jpg', 0x31, DATE_ADD(NOW(), INTERVAL 7 DAY)),
-(2, 'Rose Gold diamonds Earring', 'Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor\r\n                        dolor sit amet consectetur Lorem ipsum dolor', 250.00, 190.00, 40, 15, 'jewellery-1.jpg', 0x31, DATE_ADD(NOW(), INTERVAL 5 DAY));
+(1, 'shampoo, conditioner & facewash packs', 'Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor\r\n                        dolor sit amet consectetur Lorem ipsum dolor', 200.00, 150.00, 40, 20, 'shampoo.jpg', 0x31, '2025-06-18 09:35:12'),
+(2, 'Rose Gold diamonds Earring', 'Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor\r\n                        dolor sit amet consectetur Lorem ipsum dolor', 250.00, 190.00, 40, 15, 'jewellery-1.jpg', 0x31, '2025-06-16 09:35:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `favorites`
+--
+
+CREATE TABLE `favorites` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(100) NOT NULL,
+  `product_id` int(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `favorites`
+--
+
+INSERT INTO `favorites` (`id`, `customer_id`, `product_id`, `created_at`) VALUES
+(28, 9, 9, '2025-06-12 18:36:29');
 
 -- --------------------------------------------------------
 
@@ -309,6 +345,38 @@ INSERT INTO `jewelry` (`id`, `Jewelry_category_name`, `Jewelry_category_quantity
 (1, 'Earrings', 46, 0x31),
 (2, 'Couple Rings', 73, 0x31),
 (3, 'Necklace', 61, 0x31);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `order_id` int(100) NOT NULL,
+  `customer_id` int(100) NOT NULL,
+  `order_total` decimal(10,2) NOT NULL,
+  `order_status` enum('pending','confirmed','shipped','delivered','cancelled') NOT NULL DEFAULT 'pending',
+  `payment_status` enum('pending','paid','failed','refunded') NOT NULL DEFAULT 'pending',
+  `shipping_address` text NOT NULL,
+  `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `order_item_id` int(100) NOT NULL,
+  `order_id` int(100) NOT NULL,
+  `product_id` int(100) NOT NULL,
+  `quantity` int(10) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `total` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -459,20 +527,32 @@ INSERT INTO `settings` (`website_name`, `website_logo`, `website_footer`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `favorites`
+-- Table structure for table `transactions`
 --
 
-CREATE TABLE `favorites` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(100) NOT NULL,
-  `product_id` int(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
+CREATE TABLE `transactions` (
+  `transaction_id` int(100) NOT NULL,
+  `order_id` int(100) NOT NULL,
+  `transaction_type` enum('payment','refund') NOT NULL DEFAULT 'payment',
+  `amount` decimal(10,2) NOT NULL,
+  `payment_method` varchar(50) NOT NULL,
+  `transaction_status` enum('pending','success','failed') NOT NULL DEFAULT 'pending',
+  `transaction_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `reference_id` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `audit_log`
+--
+ALTER TABLE `audit_log`
+  ADD PRIMARY KEY (`log_id`),
+  ADD KEY `idx_event_type` (`event_type`),
+  ADD KEY `idx_user_id` (`user_id`),
+  ADD KEY `idx_event_timestamp` (`event_timestamp`);
 
 --
 -- Indexes for table `bags`
@@ -530,6 +610,12 @@ ALTER TABLE `deal_of_the_day`
   ADD PRIMARY KEY (`deal_id`);
 
 --
+-- Indexes for table `favorites`
+--
+ALTER TABLE `favorites`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `footwear`
 --
 ALTER TABLE `footwear`
@@ -546,6 +632,21 @@ ALTER TABLE `glasses`
 --
 ALTER TABLE `jewelry`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`order_item_id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `perfume`
@@ -566,8 +667,21 @@ ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`transaction_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `audit_log`
+--
+ALTER TABLE `audit_log`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `banner`
@@ -588,89 +702,10 @@ ALTER TABLE `customer`
   MODIFY `customer_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT for table `favorites`
 --
-ALTER TABLE `products`
-  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `order_id` int(100) NOT NULL,
-  `customer_id` int(100) NOT NULL,
-  `order_total` decimal(10,2) NOT NULL,
-  `order_status` enum('pending','confirmed','shipped','delivered','cancelled') NOT NULL DEFAULT 'pending',
-  `payment_status` enum('pending','paid','failed','refunded') NOT NULL DEFAULT 'pending',
-  `shipping_address` text NOT NULL,
-  `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_items`
---
-
-CREATE TABLE `order_items` (
-  `order_item_id` int(100) NOT NULL,
-  `order_id` int(100) NOT NULL,
-  `product_id` int(100) NOT NULL,
-  `quantity` int(10) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `total` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transactions`
---
-
-CREATE TABLE `transactions` (
-  `transaction_id` int(100) NOT NULL,
-  `order_id` int(100) NOT NULL,
-  `transaction_type` enum('payment','refund') NOT NULL DEFAULT 'payment',
-  `amount` decimal(10,2) NOT NULL,
-  `payment_method` varchar(50) NOT NULL,
-  `transaction_status` enum('pending','success','failed') NOT NULL DEFAULT 'pending',
-  `transaction_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `reference_id` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `customer_id` (`customer_id`);
-
---
--- Indexes for table `order_items`
---
-ALTER TABLE `order_items`
-  ADD PRIMARY KEY (`order_item_id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `transactions`
---
-ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`transaction_id`),
-  ADD KEY `order_id` (`order_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
+ALTER TABLE `favorites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -685,6 +720,12 @@ ALTER TABLE `order_items`
   MODIFY `order_item_id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
@@ -693,6 +734,12 @@ ALTER TABLE `transactions`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `audit_log`
+--
+ALTER TABLE `audit_log`
+  ADD CONSTRAINT `fk_audit_customer` FOREIGN KEY (`user_id`) REFERENCES `customer` (`customer_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`
@@ -712,7 +759,6 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `transactions`
   ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE;
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
