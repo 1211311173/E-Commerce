@@ -1,0 +1,31 @@
+# Deny access to all files in the logs directory
+# This prevents direct access to log files via web browser
+
+# Apache 2.4+
+<RequireAll>
+    Require all denied
+</RequireAll>
+
+# Apache 2.2 (fallback)
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>
+
+# Additional security measures
+<Files "*">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent execution of PHP files
+<FilesMatch "\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent access to common log file extensions
+<FilesMatch "\.(log|txt)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
